@@ -140,10 +140,16 @@ body {
     line-height: 30px;
     border-radius: 5px;
     transition: background 0.3s linear;
+    min-width: 18px;
+    text-align: center;
 }
 
 .button.active {
     background: rgb(244,112,35);
+}
+
+.button-run {
+    color: rgb(142,210,138);
 }
 
 .sidebar-working {
@@ -193,13 +199,12 @@ body {
 }
 
 .body {
-    width: calc(100% - 321px);
-    height: calc(100% - 100px);
+    width: calc(100% - 301px);
+    height: calc(100% - 90px);
     margin-left: 301px;
     margin-top: 80px;
     position: absolute;
     z-index: 0;
-    padding: 10px;
 }
 
 .body #editor {

@@ -6,8 +6,8 @@
     function onDeviceReady() {
         document.addEventListener('pause', onPause.bind(this), false);
         document.addEventListener('resume', onResume.bind(this), false);
-        jFlick.Startup();
         StatusBar.styleLightContent();
+        jFlick.Startup();
     };
 
     function onPause() {

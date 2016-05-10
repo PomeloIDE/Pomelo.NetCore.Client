@@ -107,7 +107,7 @@ jFlick.OnLoaded = function (i, req, top, bottom) {
     if (!router.global.onloaded[i])
         return jFlick.__OnLoaded(0, req, top, bottom);
     return function () {
-        router.global.onloaded[i](req, top, bottom, jFlick.OnPopping(i + 1, req, top, bottom));
+        router.global.onloaded[i](req, top, bottom, jFlick.OnLoaded(i + 1, req, top, bottom));
     };
 };
 
@@ -246,7 +246,6 @@ jFlick.RedirectTo = function (url, performance) {
         window.history.pushState({ url: url, performance: performance }, '', url);
         jFlick.__performance = history.state.performance;
         var tmp = $(frm).contents().find('.container')[0];
-        console.error(tmp);
         var container = $(tmp);
         frm.parentNode.removeChild(frm);
         container.attr('id', jFlick.GenerateRandomString());
