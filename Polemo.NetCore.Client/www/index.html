@@ -1,25 +1,18 @@
+<!-- This is the entry point for jflick mvc -->
+<!-- DO NOT change the existed content -->
 <!DOCTYPE html>
 <html>
-    <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-    <!--
-        必要时在以下 META 标记中自定义内容安全策略。将 "unsafe-inline" 添加到 default-src 以启动内联 JavaScript。
-      有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=617521
-    -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-        
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Polemo.NetCore.Client</title>
-    </head>
-    <body>
-        <div class="app">
-            <p id="deviceready" class="event">正在连接到设备</p>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-        <script type="text/javascript" src="scripts/index.js"></script>
-    </body>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="assets/styles/polemo.base.css" rel="stylesheet" />
+    <link href="assets/styles/polemo.extend.css" rel="stylesheet" />
+    <script src="cordova.js"></script>
+    <script src="./assets/scripts/jquery-1.11.3.min.js"></script>
+    <script src="./assets/scripts/jquery.signalr-2.0.3.min.js"></script>
+    <script src="./assets/scripts/jflick.js"></script>
+    <script src="./controllers/homeController.js"></script>
+</head>
+<body>
+</body>
 </html>
