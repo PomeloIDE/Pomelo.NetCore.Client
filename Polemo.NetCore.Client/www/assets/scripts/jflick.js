@@ -246,6 +246,7 @@ jFlick.RedirectTo = function (url, performance) {
         window.history.pushState({ url: url, performance: performance }, '', url);
         jFlick.__performance = history.state.performance;
         var tmp = $(frm).contents().find('.container')[0];
+        console.error(tmp);
         var container = $(tmp);
         frm.parentNode.removeChild(frm);
         container.attr('id', jFlick.GenerateRandomString());

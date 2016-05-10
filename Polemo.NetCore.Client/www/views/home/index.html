@@ -1,1 +1,94 @@
-﻿
+﻿<div class="container">
+    <div class="header">
+        <div class="button active"><i class="fa fa-columns"></i></div>
+        <div class="header-center">
+            <div class="header-center-item active">CODING</div>
+            <div class="header-center-item">GIT</div>
+            <div class="header-center-item">CONSOLE</div>
+            <div class="header-center-item">BROWSER</div>
+            <div class="header-center-item">SSH</div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="search">
+            <i class="fa fa-search"></i>
+            <input type="text" id="txtSearch" />
+        </div>
+        <div class="sidebar-tab-outer">
+            <div class="sidebar-tab active">WORKING</div>
+            <div class="sidebar-tab">DIRECTORY</div>
+        </div>
+        <div class="sidebar-working">
+            <div class="sidebar-working-item active">
+                <i class="fa fa-file"></i> *Startup.cs
+            </div>
+            <div class="sidebar-working-item">
+                <i class="fa fa-file"></i> AccountController.cs
+            </div>
+            <div class="sidebar-working-item">
+                <i class="fa fa-file"></i> User.cs
+            </div>
+            <div class="sidebar-working-item">
+                <i class="fa fa-file"></i> HomeController.cs
+            </div>
+            <div class="sidebar-working-item">
+                <i class="fa fa-file"></i> _ViewStart.cshtml
+            </div>
+            <div class="sidebar-working-item">
+                <i class="fa fa-file"></i> Index.cshtml
+            </div>
+        </div>
+    </div>
+    <div class="body">
+        <pre id="editor">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
+using Microsoft.Extensions.DependencyInjection;
+using Polemo.NetCore.Server.Models;
+namespace Polemo.NetCore.Server
+{
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors(c => c.AddPolicy("Polemo", x =>
+                x.AllowCredentials()
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+            ));
+            services.AddEntityFramework()
+                .AddNpgsql()
+                .AddDbContext<PolemoContext>(x => x.UseNpgsql("User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=polemo;"));
+            services.AddIdentity<User, IdentityRole>(x =>
+            {
+                x.Password.RequireDigit = false;
+                x.Password.RequiredLength = 0;
+                x.Password.RequireLowercase = false;
+                x.Password.RequireNonLetterOrDigit = false;
+                x.Password.RequireUppercase = false;
+                x.User.AllowedUserNameCharacters = null;
+            })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<PolemoContext>();
+            services.AddAesCrypto();
+            services.AddSmtpEmailSender("smtp.exmail.qq.com", 25, "码锋科技", "service@codecomb.com", "service@codecomb.com", "Yuuko19931101");
+        }
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseCors("Polemo");
+            app.UseIISPlatformHandler();
+            app.UseSignalR();
+            app.UseIdentity();
+        }
+        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+    }
+}</pre>
+    </div>
+</div>
