@@ -27,6 +27,7 @@ body {
     padding: 0;
     color: #fff;
     font-family: OpenSans, 'Microsoft YaHei'!important;
+    background-color: rgb(51,51,51);
 }
 
 .clear {
@@ -42,6 +43,8 @@ body {
     background-color: rgb(51,51,51);
     z-index: 0;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    transition: all 0.3s linear;
+    overflow: hidden;
 }
 
 .sidebar {
@@ -155,6 +158,7 @@ body {
 .sidebar-working {
     margin: 0 -10px;
     overflow-y: auto;
+    height: calc(100% - 85px);
 }
 
 .sidebar-working .sidebar-working-item {
@@ -200,14 +204,44 @@ body {
 
 .body {
     width: calc(100% - 301px);
-    height: calc(100% - 90px);
+    height: calc(100% - 80px);
     margin-left: 301px;
     margin-top: 80px;
     position: absolute;
     z-index: 0;
+    overflow-y: auto;
 }
 
 .body #editor {
     width: 100%;
     height: 100%;
+}
+
+.blur {    
+    filter: blur(20px);    
+}
+
+.sidebar-directory {
+    margin: 0 -10px;
+    height: calc(100% - 85px);
+}
+
+.sidebar-directory-tools{
+    border-bottom: 1px solid rgb(70,70,70);
+    height: 60px;
+    padding: 0 10px;
+    overflow-x: auto;
+    line-height: 60px;
+    font-size: 24px;
+    white-space: nowrap;
+}
+
+.sidebar-directory-tools a {
+    display: inline-block;
+    width: 60px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
 }
