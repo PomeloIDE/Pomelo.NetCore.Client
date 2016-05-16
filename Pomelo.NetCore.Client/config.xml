@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="com.codecomb.pomelo.netcore" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="zh-CN" windows-packageVersion="1.0.0.0">
   <name>Pomelo IDE</name>
-  <description>A blank project that uses Apache Cordova to help you build an app that targets multiple mobile platforms: Android, iOS, Windows, and Windows Phone.</description>
+  <description>A Cloud Integrated Development Environment.</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Harbin Code Comb Technology Co., Ltd.</author>
   <content src="index.html" />
   <access origin="*" />
