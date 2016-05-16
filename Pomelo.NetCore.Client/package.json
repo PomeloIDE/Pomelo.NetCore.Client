@@ -1,5 +1,5 @@
 {
-    "name": "Polemo.NetCore.Client",
+    "name": "Pomelo.NetCore.Client",
     "version": "1.0.0",
     "private": true,
     "dependencies": {

@@ -7,11 +7,11 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.myapp205e09"
-        },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.cordova.myapp205e09"
+            "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
         }
     },
     "dependent_plugins": {}

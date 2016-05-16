@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "Polemo.NetCore.Client", "Polemo.NetCore.Client\Polemo.NetCore.Client.jsproj", "{528CB8B6-289F-4B59-8FE8-39445BB4614E}"
+Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "Pomelo.NetCore.Client", "Pomelo.NetCore.Client\Pomelo.NetCore.Client.jsproj", "{528CB8B6-289F-4B59-8FE8-39445BB4614E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
