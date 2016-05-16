@@ -245,3 +245,20 @@ body {
 .hidden {
     display: none;
 }
+
+.sidebar-directory-tree {
+    overflow-y: auto;
+    height: calc(100% - 65px);
+    padding:  0 10px 0 0;
+    color: #ccc;
+}
+
+.sidebar-directory-tree ul {
+    margin-left: 20px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.sidebar-directory-tree li {
+    min-height: 30px;
+}
