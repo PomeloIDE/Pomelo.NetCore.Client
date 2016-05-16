@@ -398,9 +398,9 @@ a, a:link, a:visited, a:hover {
 }
 
 .body.git table tr.deletion td:nth-child(3), .body.git table tr.deletion td:nth-child(4) {
-    background-color: #a62546;
+    background-color: rgba(191, 22, 65, 0.40);
 }
 
 .body.git table tr.addition td:nth-child(3), .body.git table tr.addition td:nth-child(4) {
-    background-color: #12812f;
+    background-color: rgba(18, 129, 47, 0.40);
 }
