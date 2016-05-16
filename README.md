@@ -1,1 +1,1 @@
-# Polemo.NetCore.Client
+# Pomelo.NetCore.Client
