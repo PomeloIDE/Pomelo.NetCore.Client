@@ -303,7 +303,7 @@ a, a:link, a:visited, a:hover {
 }
 
 .textbox {
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
     padding: 5px 10px;
     background-color:  rgb(50,50,50);
     border: 1px solid rgb(70,70,70);
