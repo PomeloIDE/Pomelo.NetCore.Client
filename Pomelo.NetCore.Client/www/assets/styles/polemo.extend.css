@@ -363,3 +363,44 @@ a, a:link, a:visited, a:hover {
 .sidebar-changes-list-item span.modify {
     background-color: #a237a5;
 }
+
+.body.git table {
+    width: 100%;
+    color: #ddd;
+    border-collapse: collapse;
+}
+
+.body.git table td {
+    padding: 0 5px;
+}
+
+.body.git table colgroup col:nth-child(1), .body.git table colgroup col:nth-child(2)
+{
+    width: 50px;
+}
+
+.body.git table colgroup col:nth-child(3) {
+    width: 20px;
+}
+
+.body.git table tr td:nth-child(1) {
+    text-align: right;
+    border-right: 1px solid #aaa;
+}
+
+.body.git table tr td:nth-child(2) {
+    text-align: right;
+    border-right: 5px solid #aaa;
+}
+
+.body.git table tr td:nth-child(3) {
+    text-align: center;
+}
+
+.body.git table tr.deletion td:nth-child(3), .body.git table tr.deletion td:nth-child(4) {
+    background-color: #a62546;
+}
+
+.body.git table tr.addition td:nth-child(3), .body.git table tr.addition td:nth-child(4) {
+    background-color: #12812f;
+}
