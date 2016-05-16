@@ -22,12 +22,34 @@
     src: url("../fonts/msyh.ttf") format("truetype");
 }
 
+:-moz-placeholder {
+    color: #888;  
+}
+
+::-moz-placeholder {
+    color: #888;  
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: #888;  
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #888;  
+}
+
 body {
     margin: 0;
     padding: 0;
     color: #fff;
     font-family: OpenSans, 'Microsoft YaHei'!important;
     background-color: rgb(51,51,51);
+}
+
+a, a:link, a:visited, a:hover {
+    text-decoration: none;
 }
 
 .clear {
@@ -261,4 +283,51 @@ body {
 
 .sidebar-directory-tree li {
     min-height: 30px;
+}
+
+.sidebar-changes {
+    height: calc(100% - 50px);
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.sidebar-changes-list {
+    height: calc(100% - 239px);
+    border-bottom: 1px solid rgb(70,70,70);
+    overflow-y: auto;
+}
+
+.sidebar-changes-commit {
+    height: 240px;
+    padding: 10px;
+}
+
+.textbox {
+    width: calc(100% - 20px);
+    padding: 5px 10px;
+    background-color:  rgb(50,50,50);
+    border: 1px solid rgb(70,70,70);
+    height: 24px;
+    font-size: 16px;
+    line-height: 24px;
+    outline: none;
+    border-radius: 0;
+    margin: 0;
+}
+
+.commit-description {
+    height: calc(100% - 120px);
+}
+
+.sidebar-changes-commit input[type="text"], .sidebar-changes-commit textarea {
+    display: block;
+}
+
+.commit-button {
+    border: 1px solid rgb(70,70,70);
+    background: rgb(50,50,50);
+    text-align: center;
+    padding: 10px; 
+    font-size: 16px;
+    color: #ccc;
 }
