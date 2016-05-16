@@ -48,6 +48,12 @@ body {
     background-color: rgb(51,51,51);
 }
 
+@media screen and (max-height: 1080px) {
+    body {
+        zoom: 0.75;
+    }
+}
+
 a, a:link, a:visited, a:hover {
     text-decoration: none;
 }
@@ -152,7 +158,7 @@ a, a:link, a:visited, a:hover {
     display: inline-block;
     height: 36px;
     line-height: 36px;
-    border-bottom: 4px solid rgb(244,112,35);
+    border-bottom: 4px solid #c3d446;
 }
 
 .button {
@@ -170,7 +176,7 @@ a, a:link, a:visited, a:hover {
 }
 
 .button.active {
-    background: rgb(244,112,35);
+    background: #a6b62c;
 }
 
 .button-run {
@@ -221,7 +227,7 @@ a, a:link, a:visited, a:hover {
 
 .header-center-item.active {
     color: #fff;
-    border-bottom:5px solid rgb(244,112,35);
+    border-bottom:5px solid #c3d446;
 }
 
 .body {
