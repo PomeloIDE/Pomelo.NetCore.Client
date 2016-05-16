@@ -53,7 +53,7 @@ body {
         zoom: 0.75;
     }
 
-    .body.coding {
+    #editor {
         zoom: 1.3333;
     }
 }
@@ -151,6 +151,7 @@ a, a:link, a:visited, a:hover {
     height: 36px;
     line-height: 36px;
     border-bottom: 4px solid rgb(60,60,60);
+    transition: all 0.2s linear;
 }
 
 .sidebar-tab.active {

@@ -3,15 +3,15 @@
         <div class="button active"><i class="fa fa-columns"></i></div>
         <div class="button button-run"><i class="fa fa-play"></i></div>
         <div class="header-center">
-            <a class="header-center-item coding" href="javascript:;">CODING</a>
-            <a class="header-center-item git active" href="javascript:;">GIT</a>
+            <a class="header-center-item coding active" href="javascript:;">CODING</a>
+            <a class="header-center-item git" href="javascript:;">GIT</a>
             <a class="header-center-item console" href="javascript:;">CONSOLE</a>
             <a class="header-center-item browser" href="javascript:;">BROWSER</a>
             <a class="header-center-item ssh" href="javascript:;">SSH</a>
         </div>
     </div>
     <!-- Coding Begin -->
-    <div class="sidebar coding hidden">
+    <div class="sidebar coding">
         <div class="search">
             <i class="fa fa-search"></i>
             <input type="text" id="txtSearch" />
@@ -147,7 +147,7 @@
             </div>
         </div>
     </div>
-    <div class="body coding hidden">
+    <div class="body coding">
         <pre id="editor">using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -201,7 +201,7 @@ namespace Polemo.NetCore.Server
     </div>
     <!-- Coding End -->        
     <!-- Git Begin -->    
-    <div class="sidebar git">
+    <div class="sidebar git hidden">
         <div class="sidebar-tab-outer">
             <div id="tabChanges" class="sidebar-tab active">CHANGES</div>
             <div id="tabHistory" class="sidebar-tab">HISTORIES</div>
@@ -295,7 +295,7 @@ namespace Polemo.NetCore.Server
             </div>
         </div>
     </div>
-    <div class="body git">
+    <div class="body git hidden">
         <table>
             <colgroup>
                 <col />
