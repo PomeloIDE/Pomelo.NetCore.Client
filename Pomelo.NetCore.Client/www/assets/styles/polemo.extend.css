@@ -52,6 +52,10 @@ body {
     body {
         zoom: 0.75;
     }
+
+    .body.coding {
+        zoom: 1.3333;
+    }
 }
 
 a, a:link, a:visited, a:hover {
@@ -88,6 +92,7 @@ a, a:link, a:visited, a:hover {
     left: 0;
     top: 0;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    transition: all 0.3s linear;
 }
 
 .header {
@@ -238,6 +243,7 @@ a, a:link, a:visited, a:hover {
     position: absolute;
     z-index: 0;
     overflow-y: auto;
+    transition: all 0.3s linear;
 }
 
 .body #editor {
@@ -271,7 +277,9 @@ a, a:link, a:visited, a:hover {
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(20px);    
 }
 
 .sidebar-directory-tree {
