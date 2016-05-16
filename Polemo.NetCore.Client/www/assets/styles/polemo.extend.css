@@ -183,7 +183,7 @@ a, a:link, a:visited, a:hover {
     height: calc(100% - 85px);
 }
 
-.sidebar-working .sidebar-working-item {
+.sidebar-working-item, .sidebar-changes-list-item {
     padding: 8px 10px;
     border: none;
     font-size:14px;
@@ -191,11 +191,11 @@ a, a:link, a:visited, a:hover {
     color: #ccc;
 }
 
-.sidebar-working .sidebar-working-item:nth-child(even) {
+.sidebar-working-item:nth-child(even), a:nth-child(even) .sidebar-changes-list-item {
     background: rgb(70,70,70);
 }
 
-.sidebar-working .sidebar-working-item.active {
+.sidebar-working-item.active, .sidebar-changes-list-item.active {
     background: rgb(100,100,100);
     color: #fff
 }
@@ -313,6 +313,11 @@ a, a:link, a:visited, a:hover {
     outline: none;
     border-radius: 0;
     margin: 0;
+    transition: background 0.2s linear;
+}
+
+.textbox:focus {
+    background: rgb(40,40,40);
 }
 
 .commit-description {
@@ -330,4 +335,25 @@ a, a:link, a:visited, a:hover {
     padding: 10px; 
     font-size: 16px;
     color: #ccc;
+}
+
+.sidebar-changes-list-item span {
+    color: #ddd;
+    font-weight: bold;
+    width: 20px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.sidebar-changes-list-item span.add {
+    background-color: #1282a1;
+}
+
+.sidebar-changes-list-item span.delete {
+    background-color: #e84141;
+}
+
+.sidebar-changes-list-item span.modify {
+    background-color: #a237a5;
 }
