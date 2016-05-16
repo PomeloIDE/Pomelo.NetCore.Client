@@ -48,11 +48,10 @@ body {
     background-color: rgb(51,51,51);
 }
 
-@media screen and (max-height: 1080px) {
+@media screen and (max-height: 767px) {
     body {
         zoom: 0.75;
     }
-
     #editor {
         zoom: 1.3333;
     }
