@@ -533,3 +533,8 @@ a, a:link, a:visited, a:hover {
     font-size: 14px;
     display: block;
 }
+
+.body.ssh {
+    width: 100%;
+    margin-left: 0;
+}
