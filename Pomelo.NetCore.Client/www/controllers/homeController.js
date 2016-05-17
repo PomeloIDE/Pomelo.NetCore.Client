@@ -13,6 +13,7 @@
         $('.sidebar.coding').removeClass('hidden');
         $('.body.coding').removeClass('hidden');
     });
+
     $('.header-center-item.git').click(function () {
         $('.body').addClass('hidden');
         $('.sidebar').addClass('hidden');
@@ -20,6 +21,18 @@
         $('.header-center-item.git').addClass('active');
         $('.sidebar.git').removeClass('hidden');
         $('.body.git').removeClass('hidden');
+    });
+
+    $('.header-center-item.console').click(function () {
+        $('.body').addClass('hidden');
+        $('.sidebar').addClass('hidden');
+        $('.header-center-item').removeClass('active');
+        $('.header-center-item.console').addClass('active');
+        $('.sidebar.console').removeClass('hidden');
+        $('.body.console').removeClass('hidden');
+
+        // Addition events
+        $('#txtConsole').focus();
     });
 
     // Side bar tab click events

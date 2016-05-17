@@ -180,6 +180,10 @@ a, a:link, a:visited, a:hover {
     text-align: center;
 }
 
+.button.stop {
+    color: #e45656;
+}
+
 .button.active {
     background: #a6b62c;
 }
@@ -206,7 +210,7 @@ a, a:link, a:visited, a:hover {
     background: rgb(70,70,70);
 }
 
-.sidebar-working-item.active, .sidebar-changes-list-item.active, .sidebar-histories-item.active {
+.sidebar-working-item.active, .sidebar-changes-list-item.active, .sidebar-histories-item.active, .sidebar-console-session-item.active {
     background: #a6b62c;
     color: #fff!important;
 }
@@ -242,7 +246,7 @@ a, a:link, a:visited, a:hover {
     margin-top: 80px;
     position: absolute;
     z-index: 0;
-    overflow-y: auto;
+    overflow-y: hidden;
     transition: all 0.3s linear;
 }
 
@@ -432,7 +436,6 @@ a, a:link, a:visited, a:hover {
 .sidebar-histories-item {
     padding: 10px;
     height: 40px;
-
 }
 
 .sidebar-histories-item:nth-child(even)
@@ -473,4 +476,60 @@ a, a:link, a:visited, a:hover {
 
 .sidebar-histories-item.active .summary, .sidebar-histories-item.active .hint{
     color: #fff;
+}
+
+.sidebar-console-session-before {
+    height: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc;
+    border-bottom: 1px solid rgb(80,80,80);
+    margin: 0 -10px;
+    padding: 0 10px;
+}
+
+.sidebar-console-session {
+    height: calc(100% - 21px);
+    margin: 0 -10px;
+}
+
+.sidebar-console-session-item {
+    padding: 10px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 30px;
+    color: #ccc;
+    border-bottom: 1px solid rgb(80,80,80);
+}
+
+.sidebar-console-session-item .button {
+    float: right;
+    height: 30px;
+    width: 30px;
+    font-size: 14px;
+    line-height: 30px;
+    padding: 0;
+}
+
+.sidebar-console-session-item .fa-stop {
+    color: rgb(243,139,118);
+}
+
+.sidebar-console-session-item:nth-child(even)
+{
+    background: rgb(70,70,70);
+}
+
+.textbox-console {
+    outline: 0;
+    padding: 10px;
+    margin: 0;
+    border: none;
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    background: rgb(50,50,50);
+    color: #ccc;
+    font-family: OpenSans, 'Microsoft YaHei';
+    font-size: 14px;
+    display: block;
 }
