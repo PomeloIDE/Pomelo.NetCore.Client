@@ -27,13 +27,43 @@
         $('#tabWorking').addClass('active');
         $('#tabDirectory').removeClass('active');
         $('.sidebar-directory').hide();
+        $('.sidebar-directory').addClass('hidden');
         $('.sidebar-working').show();
+        $('.sidebar-working').removeClass('hidden');
     });
 
     $('#tabDirectory').click(function () {
         $('#tabDirectory').addClass('active');
         $('#tabWorking').removeClass('active');
         $('.sidebar-directory').show();
+        $('.sidebar-directory').removeClass('hidden');
         $('.sidebar-working').hide();
+        $('.sidebar-working').addClass('hidden');
+    });
+
+    $('#tabChanges').click(function () {
+        $('#tabChanges').addClass('active');
+        $('#tabHistories').removeClass('active');
+        $('.sidebar-histories').hide();
+        $('.sidebar-histories').addClass('hidden');
+        $('.sidebar-changes').show();
+        $('.sidebar-changes').removeClass('hidden');
+        $('.body.git .changes').show();
+        $('.body.git .changes').removeClass('hidden');
+        $('.body.git .histories').hide();
+        $('.body.git .histories').addClass('hidden');
+    });
+
+    $('#tabHistories').click(function () {
+        $('#tabHistories').addClass('active');
+        $('#tabChanges').removeClass('active');
+        $('.sidebar-histories').show();
+        $('.sidebar-histories').removeClass('hidden');
+        $('.sidebar-changes').hide();
+        $('.sidebar-changes').addClass('hidden');
+        $('.body.git .histories').show();
+        $('.body.git .histories').removeClass('hidden');
+        $('.body.git .changes').hide();
+        $('.body.git .changes').addClass('hidden');
     });
 });

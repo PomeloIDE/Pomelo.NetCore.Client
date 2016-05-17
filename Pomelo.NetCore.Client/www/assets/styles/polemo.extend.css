@@ -206,9 +206,9 @@ a, a:link, a:visited, a:hover {
     background: rgb(70,70,70);
 }
 
-.sidebar-working-item.active, .sidebar-changes-list-item.active {
-    background: rgb(100,100,100);
-    color: #fff
+.sidebar-working-item.active, .sidebar-changes-list-item.active, .sidebar-histories-item.active {
+    background: #a6b62c;
+    color: #fff!important;
 }
 
 .header-center {
@@ -376,6 +376,7 @@ a, a:link, a:visited, a:hover {
     width: 100%;
     color: #ddd;
     border-collapse: collapse;
+    border-bottom: 1px solid rgb(80,80,80);
 }
 
 .body.git table td {
@@ -413,4 +414,63 @@ a, a:link, a:visited, a:hover {
 
 .body.git table tr.addition td:nth-child(3), .body.git table tr.addition td:nth-child(4) {
     background-color: rgba(18, 129, 47, 0.40);
+}
+
+.body.git .item {
+    line-height: 30px;
+    height: 30px;
+    padding: 0 10px;
+    border-bottom: 1px solid rgb(80,80,80);
+}
+
+.sidebar-histories {
+    margin: 0 -10px;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+}
+
+.sidebar-histories-item {
+    padding: 10px;
+    height: 40px;
+
+}
+
+.sidebar-histories-item:nth-child(even)
+{
+    background: rgb(70,70,70);
+}
+
+.sidebar-histories-item .avatar {
+    width: 40px; 
+    height: 40px;
+    float: left;
+}
+
+.sidebar-histories-item .info {
+    float: left;
+    width: 220px;
+    top: 0;
+    left: 40px;
+    height: 40px;
+    padding: 0 10px;
+}
+
+.sidebar-histories-item .info .summary {
+    font-size: 14px;
+    color: #eee;
+    height: 22px;
+    line-height: 22px;
+    text-overflow: ellipsis;
+}
+
+.sidebar-histories-item .info .hint {
+    font-size: 12px;
+    color: #aaa;
+    height: 18px;
+    line-height: 18px;
+    text-overflow: ellipsis;
+}
+
+.sidebar-histories-item.active .summary, .sidebar-histories-item.active .hint{
+    color: #fff;
 }
