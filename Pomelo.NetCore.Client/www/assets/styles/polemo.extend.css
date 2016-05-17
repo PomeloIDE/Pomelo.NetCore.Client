@@ -30,6 +30,17 @@
     color: #888;  
 }
 
+:-webkit-placeholder {
+    color: #888;  
+}
+
+::-webkit-placeholder {
+    color: #888;  
+}
+
+::-moz-scrollbar{width:0px}
+::-webkit-scrollbar{width:0px}
+
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
     color: #888;  
@@ -537,4 +548,8 @@ a, a:link, a:visited, a:hover {
 .body.ssh {
     width: 100%;
     margin-left: 0;
+}
+
+.body.coding pre {
+    margin: 0;
 }
