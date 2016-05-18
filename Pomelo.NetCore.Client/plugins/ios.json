@@ -12,6 +12,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
         }
     },
     "dependent_plugins": {}

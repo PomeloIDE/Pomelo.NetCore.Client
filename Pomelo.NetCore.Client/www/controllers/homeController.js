@@ -23,6 +23,15 @@
         $('.body.git').removeClass('hidden');
     });
 
+    $('.header-center-item.browser').click(function () {
+        $('.body').addClass('hidden');
+        $('.sidebar').addClass('hidden');
+        $('.header-center-item').removeClass('active');
+        $('.header-center-item.browser').addClass('active');
+        $('.sidebar.browser').removeClass('hidden');
+        $('.body.browser').removeClass('hidden');
+    });
+
     $('.header-center-item.console').click(function () {
         $('.body').addClass('hidden');
         $('.sidebar').addClass('hidden');

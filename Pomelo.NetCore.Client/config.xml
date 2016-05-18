@@ -113,4 +113,5 @@
     <vs:platformSpecificWidget platformName="windows" version="1.0.0.0" id="com.codecomb.pomelo.netcore" />
   </vs:platformSpecificValues>
   <preference name="WindowsStoreDisplayName" value="Pomelo IDE" />
+  <plugin name="cordova-plugin-inappbrowser" version="1.4.0" />
 </widget>
