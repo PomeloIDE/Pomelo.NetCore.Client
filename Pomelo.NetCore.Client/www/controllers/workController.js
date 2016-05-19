@@ -1,4 +1,4 @@
-﻿router.get('/wrok/index', function (req, res, next) {
+﻿router.get('/work/index', function (req, res, next) {
     // Ace editor
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");

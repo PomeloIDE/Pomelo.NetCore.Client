@@ -702,6 +702,7 @@ a, a:link, a:visited, a:hover {
     background-color: rgb(75,75,75);
     margin: 25px 0;
     text-align: center;
+    color: #ddd;
 }
 
 .open-project-item .name {
