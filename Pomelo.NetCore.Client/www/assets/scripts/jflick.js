@@ -274,6 +274,8 @@ $(document).ready(function () {
         else {
             a = $(e.target).parents('a');
         }
+        if (!a.attr('href'))
+            return true;
         if (a.is('a') && a.attr('href').toString().indexOf('javascript') >= 0) {
             return true;
         }

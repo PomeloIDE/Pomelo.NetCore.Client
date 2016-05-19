@@ -7,13 +7,13 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
+        },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
-        },
-        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.codecomb.pomelo.netcore"
         }
     },
