@@ -35,19 +35,23 @@ router.get('/work/index', function (req, res, next) {
                 file.addClass('active');
 
                 // Add to working list
-                $('.sidebar-working-item').removeClass('.active');
+                $('.sidebar-working-item').removeClass('active');
                 if ($('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').length > 0) {
                     $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').prependTo('.sidebar-working');
-                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').addClass('.active');
+                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').addClass('active');
                 } else {
-                    $('.sidebar-working').prepend('<div class="sidebar-working-item active"><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
+                    var working_item = $('<div class="sidebar-working-item active" ><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
+                    working_item.click(function () {
+                        file.click();
+                    });
+                    working_item.prependTo('.sidebar-working');
                 }
 
                 $('#tabWorking').click();
                 // 判断文件是否已经打开
-                if (editorDic[file.attr('path')]) {
+                if (editorDic[file.attr('data-path')]) {
                     $('.body.coding pre').hide();
-                    $('#' + editorDic[file.attr('path')].id).show();
+                    $('pre#' + editorDic[file.attr('data-path')].id).show();
                 } else {
                     showMsg('Loading file content...');
                     node.invoke('ReadFile', req.query.project, file.attr('data-path'))
