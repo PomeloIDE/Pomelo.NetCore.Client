@@ -1,4 +1,6 @@
-﻿function ExpandDirectoryTree(obj)
+﻿var editorDic = {};
+
+function ExpandDirectoryTree(obj)
 {
     if (!obj.dirName || obj.dirName == '.git')
         return "";
@@ -33,15 +35,18 @@ router.get('/work/index', function (req, res, next) {
                 file.addClass('active');
 
                 // Add to working list
-                $('.sidebar-working .active').removeClass('.active');
-                if ($('.sidebar-working-item[data-path="' + file.attr('data-path') + '"]').length > 0) {
-                    $('.sidebar-working-item[data-path="' + file.attr('data-path') + '"]').prependTo('.sidebar-working');
-                    $('.sidebar-working-item[data-path="' + file.attr('data-path') + '"]').addClass('.active');
+                $('.sidebar-working-item').removeClass('.active');
+                if ($('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').length > 0) {
+                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').prependTo('.sidebar-working');
+                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').addClass('.active');
                 } else {
-                    $('.sidebar-working').prepend('<div class="sidebar-working-item active"><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.attr('data-name') + '</div></div>');
+                    $('.sidebar-working').prepend('<div class="sidebar-working-item active"><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
                 }
 
+                $('#tabWorking').click();
                 // TODO: Load the file
+
+
             });
             hideMsg();
         });

@@ -787,13 +787,12 @@ a, a:link, a:visited, a:hover {
 }
 
 .msg {
-    position:absolute;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 9999;
-    transition: all 0.3s linear;
 }
 
 .msg .txt {
@@ -817,4 +816,8 @@ ul li div {
 
 ul li div.active {
     color: #c3d446;
+}
+
+.sidebar-working-item div {
+    display: inline-block;
 }
