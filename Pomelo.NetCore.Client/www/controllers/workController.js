@@ -60,8 +60,14 @@ router.get('/work/index', function (req, res, next) {
                                 var id = jFlick.GenerateRandomString();
                                 $('.body.coding').append('<pre id="' + id + '">' + data.msg + '</pre>');
                                 var editor = ace.edit(id);
+                                editor.pomelo = { };
+                                editor.pomelo.path = file.attr('data-path');
                                 editor.setTheme("ace/theme/twilight");
                                 editor.session.setMode("ace/mode/csharp");
+                                // Editor events
+                                editor.getSession().on('change', function () {
+                                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').text('*' + file.text());
+                                });
                                 editorDic[file.attr('data-path')] = { editor: editor, id: id };
                                 $('.body.coding pre').hide();
                                 $('#' + editorDic[file.attr('data-path')].id).show();
