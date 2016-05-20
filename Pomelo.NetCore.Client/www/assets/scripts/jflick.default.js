@@ -7,7 +7,8 @@
 });
 
 router.global.popped(function (req, top, bottom, next) {
-    top.remove();
+    top.addClass('hidden');
+    setTimeout(function () { top.remove(); }, 300);
     bottom.removeClass('hidden');
     if (next)
         next();
@@ -21,8 +22,11 @@ router.global.loading(function (req, top, bottom, next, final) {
 
 router.global.loaded(function (req, top, bottom, next) {
     top.appendTo('body');
-    top.removeClass('hidden');
-    bottom.addClass('hidden');
-    if (next)
-        next();
+    setTimeout(function () {
+        top.removeClass('hidden');
+        bottom.addClass('hidden');
+
+        if (next)
+            next();
+    }, 50);
 });

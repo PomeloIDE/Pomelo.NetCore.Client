@@ -1,22 +1,60 @@
-﻿<div class="container hidden">
+﻿<div class="container project hidden">
     <div class="header">
         <div class="header-center">
-            <a class="header-center-item coding active" href="javascript:;">OPEN A PROJECT</a>
-            <a class="header-center-item git" href="javascript:;">CREATE A PROJECT</a>
+            <a class="header-center-item open-project active" href="javascript:;">OPEN PROJECT</a>
+            <a class="header-center-item create-project" href="javascript:;">CREATE PROJECT</a>
         </div>
     </div>
     <!-- Open Project Begin -->
     <div class="body open-project">
         <div class="open-project-outer">
             <div class="open-project-item">
+                <a href="javascript:;">
+                    <div class="icon"><i class="fa fa-plus"></i></div>
+                </a>
+            </div>
+
+            <div class="open-project-item">
                 <div class="icon"><i class="fa fa-cloud"></i></div>
                 <div class="name">Pomelo.NetCore.Node</div>
                 <div class="buttons">
-                    <div class="btn open"><i class="fa fa-folder-open"></i></div>
-                    <div class="btn remove"><i class="fa fa-trash"></i></div>
+                    <a href="javascript:;" class="btn open" data-project="Pomelo.NetCore.Node" data-git="https://github.com/PomeloIDE/Pomelo.NetCore.Node/wiki/SignalR-APIs-For-Client" data-pwd="Yuuko19931101" data-usr="Kagamine" data-email="1@1234.sh"><i class="fa fa-folder-open"></i></a>
+                    <a href="javascript:;" class="btn remove"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
+
         </div>
     </div>    
-    <!-- Open Project End -->
+    <!-- Open Project End -->        
+    <!-- Create Project Begin -->    
+    <div class="sidebar create-project hidden">
+        <div class="sidebar-create-project-before">
+            TEMPLATES
+        </div>
+        <div class="create-project-outer">
+            <div class="create-project-item active">
+                <i class="fa fa-globe"></i>
+                <span>Console App</span>
+            </div>
+            <div class="create-project-item">
+                <i class="fa fa-globe"></i>
+                <span>Web Empty</span>
+            </div>
+            <div class="create-project-item">
+                <i class="fa fa-globe"></i>
+                <span>Web MVC</span>
+            </div>
+        </div>
+    </div>
+    <div class="body create-project hidden">
+        <div class="description">
+            <h3>Console App</h3>
+            <img src="http://code.visualstudio.com/images/home-intellisense.svg" />
+            <p>Go beyond syntax highlighting and autocomplete with IntelliSense, which provides smart completions based on variable types, function definitions, and imported modules.</p>
+        </div>
+        <div class="creating">
+            <a href="javascript:;" class="button">Create</a>
+        </div>
+    </div>   
+    <!-- Create Project End -->
 </div>

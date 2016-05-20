@@ -262,6 +262,8 @@ jFlick.RedirectTo = function (url, performance) {
 
 jFlick.GetPath = function (url) {
     url = url.substring(url.indexOf('/views') + 6);
+    if (url.indexOf('?') >= 0)
+        url = url.substring(0, url.indexOf('?'));
     url = url.substring(0, url.lastIndexOf('.'));
     return url;
 };

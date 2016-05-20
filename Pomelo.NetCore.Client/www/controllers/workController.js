@@ -1,55 +1,102 @@
-﻿router.get('/work/index', function (req, res, next) {
+﻿function ExpandDirectoryTree(obj)
+{
+    if (!obj.dirName || obj.dirName == '.git')
+        return "";
+    var ret = '<ul>';
+    for (var i = 0; i < obj.files.length; i++)
+    {
+        if (obj.files[i].path)
+            ret += '<li><div class="file" data-path="' + obj.files[i].path + '"><i class="fa fa-file"></i> ' + obj.files[i].name + '</div></li>';
+        else if (obj.files[i].dirName != '.git') 
+            ret += '<li><div class="folder" data-path=""><i class="fa fa-folder"></i> ' + obj.files[i].dirName + '</div></li>' + ExpandDirectoryTree(obj.files[i]);
+    }
+    return ret + '</ul>';
+}
+
+router.get('/work/index', function (req, res, next) {
+    showMsg("Loading project file structures...");
+    node.invoke('ListFolder', req.query.project, '')
+        .done(function (data) {
+            $('.work .sidebar .sidebar-directory-tree').html('');
+            $('.sidebar-working').html('');
+            var tree = ExpandDirectoryTree(data.msg);
+            $('.work .sidebar .sidebar-directory-tree').html(tree);
+            $('.sidebar-directory-tree div.folder').click(function () {
+                $('.sidebar-directory-tree div.folder').removeClass('active');
+                $('.sidebar-directory-tree div.file').removeClass('active');
+                $(this).addClass('active');
+            });
+            $('.sidebar-directory-tree div.file').click(function () {
+                $('.sidebar-directory-tree div.folder').removeClass('active');
+                $('.sidebar-directory-tree div.file').removeClass('active');
+                var file = $(this);
+                file.addClass('active');
+
+                // Add to working list
+                $('.sidebar-working .active').removeClass('.active');
+                if ($('.sidebar-working-item[data-path="' + file.attr('data-path') + '"]').length > 0) {
+                    $('.sidebar-working-item[data-path="' + file.attr('data-path') + '"]').prependTo('.sidebar-working');
+                    $('.sidebar-working-item[data-path="' + file.attr('data-path') + '"]').addClass('.active');
+                } else {
+                    $('.sidebar-working').prepend('<div class="sidebar-working-item active"><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.attr('data-name') + '</div></div>');
+                }
+
+                // TODO: Load the file
+            });
+            hideMsg();
+        });
+
     // Ace editor
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
     editor.session.setMode("ace/mode/csharp");
 
     // Navigator bar click events
-    $('.header-center-item.coding').click(function () {
-        $('.body').addClass('hidden');
-        $('.sidebar').addClass('hidden');
-        $('.header-center-item').removeClass('active');
-        $('.header-center-item.coding').addClass('active');
-        $('.sidebar.coding').removeClass('hidden');
-        $('.body.coding').removeClass('hidden');
+    $('.work .header-center-item.coding').click(function () {
+        $('.work .body').addClass('hidden');
+        $('.work .sidebar').addClass('hidden');
+        $('.work .header-center-item').removeClass('active');
+        $('.work .header-center-item.coding').addClass('active');
+        $('.work .sidebar.coding').removeClass('hidden');
+        $('.work .body.coding').removeClass('hidden');
     });
 
-    $('.header-center-item.git').click(function () {
-        $('.body').addClass('hidden');
-        $('.sidebar').addClass('hidden');
-        $('.header-center-item').removeClass('active');
-        $('.header-center-item.git').addClass('active');
-        $('.sidebar.git').removeClass('hidden');
-        $('.body.git').removeClass('hidden');
+    $('.work .header-center-item.git').click(function () {
+        $('.work .body').addClass('hidden');
+        $('.work .sidebar').addClass('hidden');
+        $('.work .header-center-item').removeClass('active');
+        $('.work .header-center-item.git').addClass('active');
+        $('.work .sidebar.git').removeClass('hidden');
+        $('.work .body.git').removeClass('hidden');
     });
 
-    $('.header-center-item.browser').click(function () {
-        $('.body').addClass('hidden');
-        $('.sidebar').addClass('hidden');
-        $('.header-center-item').removeClass('active');
-        $('.header-center-item.browser').addClass('active');
-        $('.sidebar.browser').removeClass('hidden');
-        $('.body.browser').removeClass('hidden');
+    $('.work .header-center-item.browser').click(function () {
+        $('.work .body').addClass('hidden');
+        $('.work .sidebar').addClass('hidden');
+        $('.work .header-center-item').removeClass('active');
+        $('.work .header-center-item.browser').addClass('active');
+        $('.work .sidebar.browser').removeClass('hidden');
+        $('.work .body.browser').removeClass('hidden');
     });
 
-    $('.header-center-item.console').click(function () {
-        $('.body').addClass('hidden');
-        $('.sidebar').addClass('hidden');
-        $('.header-center-item').removeClass('active');
-        $('.header-center-item.console').addClass('active');
-        $('.sidebar.console').removeClass('hidden');
-        $('.body.console').removeClass('hidden');
+    $('.work .header-center-item.console').click(function () {
+        $('.work .body').addClass('hidden');
+        $('.work .sidebar').addClass('hidden');
+        $('.work .header-center-item').removeClass('active');
+        $('.work .header-center-item.console').addClass('active');
+        $('.work .sidebar.console').removeClass('hidden');
+        $('.work .body.console').removeClass('hidden');
 
         // Addition events
         $('#txtConsole').focus();
     });
 
-    $('.header-center-item.ssh').click(function () {
-        $('.body').addClass('hidden');
-        $('.sidebar').addClass('hidden');
-        $('.header-center-item').removeClass('active');
-        $('.header-center-item.ssh').addClass('active');
-        $('.body.ssh').removeClass('hidden');
+    $('.work .header-center-item.ssh').click(function () {
+        $('.work .body').addClass('hidden');
+        $('.work .sidebar').addClass('hidden');
+        $('.work .header-center-item').removeClass('active');
+        $('.work .header-center-item.ssh').addClass('active');
+        $('.work .body.ssh').removeClass('hidden');
 
         // Addition events
         $('#txtSsh').focus();
@@ -59,44 +106,44 @@
     $('#tabWorking').click(function () {
         $('#tabWorking').addClass('active');
         $('#tabDirectory').removeClass('active');
-        $('.sidebar-directory').hide();
-        $('.sidebar-directory').addClass('hidden');
-        $('.sidebar-working').show();
-        $('.sidebar-working').removeClass('hidden');
+        $('.work .sidebar-directory').hide();
+        $('.work .sidebar-directory').addClass('hidden');
+        $('.work .sidebar-working').show();
+        $('.work .sidebar-working').removeClass('hidden');
     });
 
     $('#tabDirectory').click(function () {
         $('#tabDirectory').addClass('active');
         $('#tabWorking').removeClass('active');
-        $('.sidebar-directory').show();
-        $('.sidebar-directory').removeClass('hidden');
-        $('.sidebar-working').hide();
-        $('.sidebar-working').addClass('hidden');
+        $('.work .sidebar-directory').show();
+        $('.work .sidebar-directory').removeClass('hidden');
+        $('.work .sidebar-working').hide();
+        $('.work .sidebar-working').addClass('hidden');
     });
 
     $('#tabChanges').click(function () {
         $('#tabChanges').addClass('active');
         $('#tabHistories').removeClass('active');
-        $('.sidebar-histories').hide();
-        $('.sidebar-histories').addClass('hidden');
-        $('.sidebar-changes').show();
-        $('.sidebar-changes').removeClass('hidden');
-        $('.body.git .changes').show();
-        $('.body.git .changes').removeClass('hidden');
-        $('.body.git .histories').hide();
-        $('.body.git .histories').addClass('hidden');
+        $('.work .sidebar-histories').hide();
+        $('.work .sidebar-histories').addClass('hidden');
+        $('.work .sidebar-changes').show();
+        $('.work .sidebar-changes').removeClass('hidden');
+        $('.work .body.git .changes').show();
+        $('.work .body.git .changes').removeClass('hidden');
+        $('.work .body.git .histories').hide();
+        $('.work .body.git .histories').addClass('hidden');
     });
 
     $('#tabHistories').click(function () {
         $('#tabHistories').addClass('active');
         $('#tabChanges').removeClass('active');
-        $('.sidebar-histories').show();
-        $('.sidebar-histories').removeClass('hidden');
-        $('.sidebar-changes').hide();
-        $('.sidebar-changes').addClass('hidden');
-        $('.body.git .histories').show();
-        $('.body.git .histories').removeClass('hidden');
-        $('.body.git .changes').hide();
-        $('.body.git .changes').addClass('hidden');
+        $('.work .sidebar-histories').show();
+        $('.work .sidebar-histories').removeClass('hidden');
+        $('.work .sidebar-changes').hide();
+        $('.work .sidebar-changes').addClass('hidden');
+        $('.work .body.git .histories').show();
+        $('.work .body.git .histories').removeClass('hidden');
+        $('.work .body.git .changes').hide();
+        $('.work .body.git .changes').addClass('hidden');
     });
 });
