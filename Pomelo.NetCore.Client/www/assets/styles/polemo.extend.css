@@ -821,3 +821,11 @@ ul li div.active {
 .sidebar-working-item div {
     display: inline-block;
 }
+
+.display-none {
+    display: none;
+}
+
+.body.coding pre {
+    height: 100%;
+}

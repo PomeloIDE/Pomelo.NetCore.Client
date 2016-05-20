@@ -44,17 +44,33 @@ router.get('/work/index', function (req, res, next) {
                 }
 
                 $('#tabWorking').click();
-                // TODO: Load the file
-
-
+                // 判断文件是否已经打开
+                if (editorDic[file.attr('path')]) {
+                    $('.body.coding pre').hide();
+                    $('#' + editorDic[file.attr('path')].id).show();
+                } else {
+                    showMsg('Loading file content...');
+                    node.invoke('ReadFile', req.query.project, file.attr('data-path'))
+                        .done(function (data) {
+                            if (data.isSucceeded) {
+                                var id = jFlick.GenerateRandomString();
+                                $('.body.coding').append('<pre id="' + id + '">' + data.msg + '</pre>');
+                                var editor = ace.edit(id);
+                                editor.setTheme("ace/theme/twilight");
+                                editor.session.setMode("ace/mode/csharp");
+                                editorDic[file.attr('data-path')] = { editor: editor, id: id };
+                                $('.body.coding pre').hide();
+                                $('#' + editorDic[file.attr('data-path')].id).show();
+                                hideMsg();
+                            } else {
+                                $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').remove();
+                                showMsg('An error occurred while reading file. <br />' + data.msg, 3000);
+                            }
+                        });
+                }
             });
             hideMsg();
         });
-
-    // Ace editor
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/twilight");
-    editor.session.setMode("ace/mode/csharp");
 
     // Navigator bar click events
     $('.work .header-center-item.coding').click(function () {
