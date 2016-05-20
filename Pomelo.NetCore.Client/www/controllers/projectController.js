@@ -5,8 +5,11 @@
         node.invoke('OpenProject', proj.attr('data-project'), proj.attr('data-git'), proj.attr('data-usr'), proj.attr('data-email'), proj.attr('data-pwd'))
             .done(function (data) {
                 if (data.isSucceeded) {
-                    hideMsg();
-                    jFlick.RedirectTo('~/work/index.html?project=' + proj.attr('data-project'));
+                    showMsg("Starting OmniSharp Host...");
+                    node.invoke('StartOmnisharp', proj.attr('data-project'))
+                        .done(function () {
+                            jFlick.RedirectTo('~/work/index.html?project=' + proj.attr('data-project'));
+                        });
                 } else {
                     showMsg('An error occurred during loading the project. <br/> ' + data.msg, 3000);
                 }

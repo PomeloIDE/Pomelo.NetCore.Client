@@ -1,4 +1,25 @@
 ﻿var editorDic = {};
+var langTools = ace.require('ace/ext/language_tools');
+var omnisharpCompleter = {
+    getCompletions: function (editor, session, pos, prefix, callback) {
+        if (prefix.length == 0) { callback(null, []); return }
+        node.invoke('AutoComplete', editor.pomelo.project, editor.pomelo.path, pos.row + 1, pos.column, prefix, editor.getValue())
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    var ret = [];
+                    var autocomplete = JSON.parse(data.msg);
+                    for (var i = 0; i < autocomplete.length; i++) {
+                        ret.push({ name: autocomplete[i].DisplayText, value: autocomplete[i].CompletionText, score: 100, meta: autocomplete[i].ReturnType });
+                    }
+                    console.error(JSON.stringify(ret));
+                    callback(null, ret);
+                } else {
+                    alert(data.msg);
+                }
+            });
+    }
+}
+langTools.addCompleter(omnisharpCompleter);
 
 function ExpandDirectoryTree(obj)
 {
@@ -59,9 +80,15 @@ router.get('/work/index', function (req, res, next) {
                             if (data.isSucceeded) {
                                 var id = jFlick.GenerateRandomString();
                                 $('.body.coding').append('<pre id="' + id + '">' + data.msg + '</pre>');
+                                // Create Ace Editor
                                 var editor = ace.edit(id);
+                                editor.setOptions({
+                                    enableBasicAutocompletion: false,
+                                    enableLiveAutocompletion: true
+                                });
                                 editor.pomelo = { };
                                 editor.pomelo.path = file.attr('data-path');
+                                editor.pomelo.project = req.query.project;
                                 editor.setTheme("ace/theme/twilight");
                                 editor.session.setMode("ace/mode/csharp");
                                 // Editor events
