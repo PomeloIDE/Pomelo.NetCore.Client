@@ -11,7 +11,6 @@ var omnisharpCompleter = {
                     for (var i = 0; i < autocomplete.length; i++) {
                         ret.push({ name: autocomplete[i].DisplayText, value: autocomplete[i].CompletionText, score: 100, meta: autocomplete[i].ReturnType });
                     }
-                    console.error(JSON.stringify(ret));
                     callback(null, ret);
                 } else {
                     alert(data.msg);
@@ -23,14 +22,14 @@ langTools.addCompleter(omnisharpCompleter);
 
 function ExpandDirectoryTree(obj)
 {
-    if (!obj.dirName || obj.dirName == '.git')
+    if (!obj.dirName || obj.dirName == '.git' || obj.dirName == 'bin' || obj.dirName == 'obj')
         return "";
     var ret = '<ul>';
     for (var i = 0; i < obj.files.length; i++)
     {
         if (obj.files[i].path)
             ret += '<li><div class="file" data-path="' + obj.files[i].path + '"><i class="fa fa-file"></i> ' + obj.files[i].name + '</div></li>';
-        else if (obj.files[i].dirName != '.git') 
+        else if (obj.files[i].dirName != '.git' && obj.files[i].dirName != 'bin' && obj.files[i].dirName != 'obj')
             ret += '<li><div class="folder" data-path=""><i class="fa fa-folder"></i> ' + obj.files[i].dirName + '</div></li>' + ExpandDirectoryTree(obj.files[i]);
     }
     return ret + '</ul>';
@@ -203,5 +202,21 @@ router.get('/work/index', function (req, res, next) {
         $('.work .body.git .histories').removeClass('hidden');
         $('.work .body.git .changes').hide();
         $('.work .body.git .changes').addClass('hidden');
+    });
+
+    // Save button click
+    $('.button.save').click(function () {
+        var path = $('.sidebar-working-item.active').children('div').attr('data-path');
+        var content = editorDic[path].editor.getValue();
+        showMsg('Saving...');
+        node.invoke('WriteFile', req.query.project, path, content)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    $('.sidebar-working-item.active').children('div').html($('.sidebar-working-item.active').children('div').attr('data-name'));
+                    hideMsg();
+                } else {
+                    showMsg('An error occurred while saving the file. <br />' + data.msg, 3000);
+                }
+            });
     });
 });

@@ -829,3 +829,7 @@ ul li div.active {
 .body.coding pre {
     height: 100%;
 }
+
+.right-buttons {
+    float: right;
+}
