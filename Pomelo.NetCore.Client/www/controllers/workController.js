@@ -213,10 +213,30 @@ router.get('/work/index', function (req, res, next) {
             .done(function (data) {
                 if (data.isSucceeded) {
                     $('.sidebar-working-item.active div').html($('.sidebar-working-item.active div').attr('data-display'));
-                    showMsg('The file <' + $('.sidebar-working-item.active div').attr('data-display') + '> has been saved successfully.', 1000);
+                    showMsg('The file ' + $('.sidebar-working-item.active div').attr('data-display') + ' has been saved successfully.', 1000);
                 } else {
                     showMsg('An error occurred while saving the file. <br />' + data.msg, 3000);
                 }
             });
+    });
+
+    // Remove button click
+    $('.tool-remove').click(function () {
+        var path = $('.sidebar-directory-tree .file.active').attr('data-path');
+        var display = $('.sidebar-directory-tree .file.active').text();
+        var isFile = $('.sidebar-directory-tree .file.active i').hasClass('fa-file');
+        if (isFile) {
+            if (confirm("Do you want to remove this file?")) {
+                showMsg('Removing ' + display);
+                node.invoke('RemoveFile', req.query.project, path)
+                    .done(function (data) {
+                        if (data.isSucceeded) {
+                            // TODO: 
+                        } else {
+                            // TODO:
+                        }
+                    });
+            }
+        }
     });
 });
