@@ -92,7 +92,7 @@ router.get('/work/index', function (req, res, next) {
                                 editor.session.setMode("ace/mode/csharp");
                                 // Editor events
                                 editor.getSession().on('change', function () {
-                                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').text('*' + file.text());
+                                    $('.sidebar-working-item.active div').html('*' + file.text());
                                 });
                                 editorDic[file.attr('data-path')] = { editor: editor, id: id };
                                 $('.body.coding pre').hide();
@@ -206,14 +206,14 @@ router.get('/work/index', function (req, res, next) {
 
     // Save button click
     $('.button.save').click(function () {
-        var path = $('.sidebar-working-item.active').children('div').attr('data-path');
+        var path = $('.sidebar-working-item.active div').attr('data-path');
         var content = editorDic[path].editor.getValue();
         showMsg('Saving...');
         node.invoke('WriteFile', req.query.project, path, content)
             .done(function (data) {
                 if (data.isSucceeded) {
-                    $('.sidebar-working-item.active').children('div').html($('.sidebar-working-item.active').children('div').attr('data-name'));
-                    hideMsg();
+                    $('.sidebar-working-item.active div').html($('.sidebar-working-item.active div').attr('data-display'));
+                    showMsg('The file <' + $('.sidebar-working-item.active div').attr('data-display') + '> has been saved successfully.', 1000);
                 } else {
                     showMsg('An error occurred while saving the file. <br />' + data.msg, 3000);
                 }
