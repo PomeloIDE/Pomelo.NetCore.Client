@@ -333,13 +333,13 @@ router.get('/work/index', function (req, res, next) {
         var foldername = prompt("Folder name", "");
         var path = $('.sidebar-directory-tree .active').attr('data-path');
         if ($('.sidebar-directory-tree .active').hasClass('file')) {
-            path = dom.attr('data-path');
+            path = $('.sidebar-directory-tree .active').attr('data-path').replace($('.sidebar-directory-tree .active').text().trim(), '');
         }
-        console.error(req.query.project, path, foldername);
         node.invoke('CreateFolder', req.query.project, path, foldername)
             .done(function (data) {
                 if (data.isSucceeded) {
                     RebuildDirectoryTree(req.query.project, function () {
+                        console.error(data.path);
                         $('.sidebar-directory-tree [data-path="' + data.path + '"]').parent().click();
                     });
                 } else {
