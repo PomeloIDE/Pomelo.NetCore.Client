@@ -314,7 +314,7 @@ router.get('/work/index', function (req, res, next) {
                                 $(tmp[i]).children('div').attr('data-path', $(tmp[i]).children('div').attr('data-path').replace(path, $('.sidebar-directory-tree .folder.active').attr('data-path')));
                             }
                         }
-                        showMsg('File ' + display + ' has been renamed to ' + new_name + ' successfully.', 1000);
+                        showMsg('Folder ' + display + ' has been renamed to ' + new_name + ' successfully.', 1000);
                     } else {
                         showMsg('An error occurred while renaming folder. <br />' + data.msg, 3000);
                     }
