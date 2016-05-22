@@ -22,15 +22,15 @@ langTools.addCompleter(omnisharpCompleter);
 
 function ExpandDirectoryTree(obj)
 {
-    if (!obj.dirName || obj.dirName == '.git' || obj.dirName == 'bin' || obj.dirName == 'obj')
+    if (!obj.dirName.display || obj.dirName.display == '.git' || obj.dirName.display == 'bin' || obj.dirName.display == 'obj')
         return "";
     var ret = '<ul>';
     for (var i = 0; i < obj.files.length; i++)
     {
         if (obj.files[i].path)
             ret += '<li><div class="file" data-path="' + obj.files[i].path + '"><i class="fa fa-file"></i> ' + obj.files[i].name + '</div></li>';
-        else if (obj.files[i].dirName != '.git' && obj.files[i].dirName != 'bin' && obj.files[i].dirName != 'obj')
-            ret += '<li><div class="folder" data-path=""><i class="fa fa-folder"></i> ' + obj.files[i].dirName + '</div></li>' + ExpandDirectoryTree(obj.files[i]);
+        else if (obj.files[i].dirName.display != '.git' && obj.files[i].dirName.display != 'bin' && obj.files[i].dirName.display != 'obj')
+            ret += '<li><div class="folder" data-path="' + obj.files[i].dirName.full + '"><i class="fa fa-folder"></i> ' + obj.files[i].dirName.display + '</div></li>' + ExpandDirectoryTree(obj.files[i]);
     }
     return ret + '</ul>';
 }
@@ -71,7 +71,7 @@ router.get('/work/index', function (req, res, next) {
                 } else {
                     showMsg('Loading file content...');
                     // Add to working list
-                    var working_item = $('<div class="sidebar-working-item active" ><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
+                    var working_item = $('<div class="sidebar-working-item active" ><i class="fa fa-file"></i> <div data-display="' + file.text().trim() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
                     working_item.click(function () {
                         file.click();
                     });
@@ -250,8 +250,8 @@ router.get('/work/index', function (req, res, next) {
                             $('.sidebar-directory-tree .folder.active').parent().remove();
                             var tmp = $('.sidebar-working-item');
                             for (var i = 0; i < tmp.length; i++) {
-                                if ($(tmp).attr('data-path').indexOf(path) >= 0) {
-                                    $(tmp).remove();
+                                if ($(tmp[i]).children('div').attr('data-path').indexOf(path) >= 0) {
+                                    $(tmp[i]).remove();
                                 }
                             }
                             showMsg('The folder ' + display + ' has been removed successfully.', 1000);
@@ -260,6 +260,65 @@ router.get('/work/index', function (req, res, next) {
                         }
                     });
             }
+        }
+    });
+
+    // Rename button click
+    $('.tool-rename').click(function () {
+        var path = $('.sidebar-directory-tree .active').attr('data-path');
+        var display = $('.sidebar-directory-tree .active').text().trim();
+        var isFile = $('.sidebar-directory-tree .active i').hasClass('fa-file');
+        var new_name = prompt("Input a new name", display);
+        if (isFile) {
+            var index = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+            var iswin = path.lastIndexOf('\\') > path.lastIndexOf('/');
+            var folder = index > 0 ? path.substr(0, index).trim() : path;
+            showMsg('Renaming file ' + display + '...');
+            node.invoke('RenameFile', req.query.project, folder, display, new_name)
+                .done(function (data) {
+                    if (data.isSucceeded) {
+                        $('.sidebar-directory-tree .file.active').attr('data-path', (folder ? folder + (iswin ? '\\' : '/') : '') + new_name);
+                        $('.sidebar-directory-tree .file.active').html('<i class="fa fa-file"></i> ' + new_name);
+                        var tmp = $('.sidebar-working-item');
+                        for (var i = 0; i < tmp.length; i++) {
+                            if ($(tmp[i]).children('div').attr('data-path') == path) {
+                                $(tmp[i]).children('div').attr('data-path', $('.sidebar-directory-tree .file.active').attr('data-path'));
+                                $(tmp[i]).children('div').attr('data-display', new_name);
+                                $(tmp[i]).children('div').text($(tmp[i]).children('div').text().replace(display, new_name));
+                            }
+                        }
+                        showMsg('File ' + display + ' has been renamed to ' + new_name + ' successfully.', 1000);
+                    } else {
+                        showMsg('An error occurred while renaming file. <br />' + data.msg, 3000);
+                    }
+                });
+        } else {
+            var index = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+            var iswin = path.lastIndexOf('\\') > path.lastIndexOf('/');
+            var basefolder = index > 0 ? path.substr(0, index) : path;
+            showMsg('Renaming folder ' + display + '...');
+            node.invoke('RenameFolder', req.query.project, basefolder, display, new_name)
+                .done(function (data) {
+                    if (data.isSucceeded) {
+                        $('.sidebar-directory-tree .folder.active').attr('data-path', (folder ? folder + (iswin ? '\\' : '/') : '') + new_name);
+                        $('.sidebar-directory-tree .folder.active').html('<i class="fa fa-folder"></i> ' + new_name);
+                        var tmp = $('.sidebar-directory-tree .file');
+                        for (var i = 0; i < tmp.length; i++) {
+                            if ($(tmp[i]).attr('data-path').indexOf(path) >= 0) {
+                                $(tmp[i]).attr('data-path', $(tmp).attr('data-path').replace(path, $('.sidebar-directory-tree .folder.active').attr('data-path')));
+                            }
+                        }
+                        var tmp2 = $('.sidebar-working-item');
+                        for (var i = 0; i < tmp2.length; i++) {
+                            if ($(tmp[i]).children('div').attr('data-path').indexOf(path) >= 0) {
+                                $(tmp[i]).children('div').attr('data-path', $(tmp[i]).children('div').attr('data-path').replace(path, $('.sidebar-directory-tree .folder.active').attr('data-path')));
+                            }
+                        }
+                        showMsg('File ' + display + ' has been renamed to ' + new_name + ' successfully.', 1000);
+                    } else {
+                        showMsg('An error occurred while renaming folder. <br />' + data.msg, 3000);
+                    }
+                });
         }
     });
 });
