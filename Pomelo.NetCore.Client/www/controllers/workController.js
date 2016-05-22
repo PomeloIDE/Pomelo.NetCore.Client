@@ -347,4 +347,24 @@ router.get('/work/index', function (req, res, next) {
                 }
             });
     });
+
+    // Create file
+    $('.tool-new-file').click(function () {
+        var name = prompt("File name", "");
+        var path = $('.sidebar-directory-tree .active').attr('data-path');
+        if ($('.sidebar-directory-tree .active').hasClass('file')) {
+            path = $('.sidebar-directory-tree .active').attr('data-path').replace($('.sidebar-directory-tree .active').text().trim(), '');
+        }
+        node.invoke('CreateFile', req.query.project, path, name)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    RebuildDirectoryTree(req.query.project, function () {
+                        console.error(data.path);
+                        $('.sidebar-directory-tree [data-path="' + data.path + '"]').parent().click();
+                    });
+                } else {
+                    showMsg('An error occurred while renaming folder. <br />' + data.msg, 3000);
+                }
+            });
+    });
 });
