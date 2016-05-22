@@ -339,7 +339,6 @@ router.get('/work/index', function (req, res, next) {
             .done(function (data) {
                 if (data.isSucceeded) {
                     RebuildDirectoryTree(req.query.project, function () {
-                        console.error(data.path);
                         $('.sidebar-directory-tree [data-path="' + data.path + '"]').parent().click();
                     });
                 } else {
@@ -359,7 +358,6 @@ router.get('/work/index', function (req, res, next) {
             .done(function (data) {
                 if (data.isSucceeded) {
                     RebuildDirectoryTree(req.query.project, function () {
-                        console.error(data.path);
                         $('.sidebar-directory-tree [data-path="' + data.path + '"]').parent().click();
                     });
                 } else {
