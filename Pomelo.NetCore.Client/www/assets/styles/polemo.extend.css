@@ -228,7 +228,7 @@ a, a:link, a:visited, a:hover {
 }
 
 .sidebar-working-item.active, .sidebar-changes-list-item.active, .sidebar-histories-item.active, .sidebar-console-session-item.active, .create-project-item.active {
-    background: #a6b62c;
+    background: #a6b62c!important;
     color: #fff!important;
 }
 

@@ -409,4 +409,33 @@ router.get('/work/index', function (req, res, next) {
                 }
             });
     });
+
+    // Git Commit
+    $('.btn-git-commit').click(function () {
+        if (!$('.txt-git-commit-summary').val()) {
+            showMsg('Commit summary cannot be empty.', 3000);
+            return;
+        }
+        var summary = $('.txt-git-commit-summary').val();
+        var description = $('.commit-description').val();
+        showMsg('Creating commit...');
+        node.invoke('CreateGitCommit', req.query.project, summary, description)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    showMsg('Pushing to remote server...');
+                    node.invoke('CreateGitPush', req.query.project)
+                        .done(function (data) {
+                            if (data.isSucceeded) {
+                                $('.header-center-item.git').click();
+                                $('.txt-git-commit-summary').val('');
+                                $('.commit-description').val('');
+                            } else {
+                                showMsg('An error occurred while pushing commit to remote server.', 3000);
+                            }
+                        });
+                } else {
+                    showMsg('An error occurred while creating commit.', 3000);
+                }
+            });
+    });
 });
