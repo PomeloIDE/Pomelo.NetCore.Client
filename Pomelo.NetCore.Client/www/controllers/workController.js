@@ -54,26 +54,28 @@ router.get('/work/index', function (req, res, next) {
                 var file = $(this);
                 file.addClass('active');
 
-                // Add to working list
+                $('#tabWorking').click();
                 $('.sidebar-working-item').removeClass('active');
-                if ($('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').length > 0) {
-                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').prependTo('.sidebar-working');
-                    $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').addClass('active');
+                // 判断文件是否已经打开
+                if (editorDic[file.attr('data-path')]) {
+                    $('.body.coding pre').hide();
+                    $('pre#' + editorDic[file.attr('data-path')].id).show();
+                    var items = $('.sidebar-working-item');
+                    for (var i = 0; i < items.length; i++) {
+                        console.error($(items[i]).children('div').attr('data-path'),file.attr('data-path'), $(items[i]).children('div').attr('data-path') == file.attr('data-path'));
+                        if ($(items[i]).children('div').attr('data-path') == file.attr('data-path')) {
+                            $(items[i]).addClass('active');
+                            $(items[i]).prependTo('.sidebar-working');
+                        }
+                    }
                 } else {
+                    showMsg('Loading file content...');
+                    // Add to working list
                     var working_item = $('<div class="sidebar-working-item active" ><i class="fa fa-file"></i> <div data-display="' + file.text() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
                     working_item.click(function () {
                         file.click();
                     });
                     working_item.prependTo('.sidebar-working');
-                }
-
-                $('#tabWorking').click();
-                // 判断文件是否已经打开
-                if (editorDic[file.attr('data-path')]) {
-                    $('.body.coding pre').hide();
-                    $('pre#' + editorDic[file.attr('data-path')].id).show();
-                } else {
-                    showMsg('Loading file content...');
                     node.invoke('ReadFile', req.query.project, file.attr('data-path'))
                         .done(function (data) {
                             if (data.isSucceeded) {
@@ -226,14 +228,35 @@ router.get('/work/index', function (req, res, next) {
         var display = $('.sidebar-directory-tree .file.active').text();
         var isFile = $('.sidebar-directory-tree .file.active i').hasClass('fa-file');
         if (isFile) {
-            if (confirm("Do you want to remove this file?")) {
+            if (confirm('Do you want to remove this file?')) {
                 showMsg('Removing ' + display);
                 node.invoke('RemoveFile', req.query.project, path)
                     .done(function (data) {
                         if (data.isSucceeded) {
-                            // TODO: 
+                            $('.sidebar-directory-tree .file.active').parent().remove();
+                            $('.sidebar-working-item.active').remove();
+                            showMsg('The file ' + display + ' has been removed successfully.', 1000);
                         } else {
-                            // TODO:
+                            showMsg('An error occurred while removing file. <br />' + data.msg, 3000);
+                        }
+                    });
+            }
+        } else {
+            if (confirm('Do you want to remove this folder and remove the sub files?')) {
+                showMsg('Removing ' + display);
+                node.invoke('RemoveFolder', req.query.project, path)
+                    .done(function (data) {
+                        if (data.isSucceeded) {
+                            $('.sidebar-directory-tree .folder.active').parent().remove();
+                            var tmp = $('.sidebar-working-item');
+                            for (var i = 0; i < tmp.length; i++) {
+                                if ($(tmp).attr('data-path').indexOf(path) >= 0) {
+                                    $(tmp).remove();
+                                }
+                            }
+                            showMsg('The folder ' + display + ' has been removed successfully.', 1000);
+                        } else {
+                            showMsg('An error occurred while removing file. <br />' + data.msg, 3000);
                         }
                     });
             }
