@@ -35,81 +35,87 @@ function ExpandDirectoryTree(obj)
     return ret + '</ul>';
 }
 
+function RebuildDirectoryTree(project, callback)
+{
+    node.invoke('ListFolder', project, '')
+    .done(function (data) {
+        $('.work .sidebar .sidebar-directory-tree').html('');
+        $('.sidebar-working').html('');
+        var tree = ExpandDirectoryTree(data.msg);
+        $('.work .sidebar .sidebar-directory-tree').html(tree);
+        $('.sidebar-directory-tree div.folder').click(function () {
+            $('.sidebar-directory-tree div.folder').removeClass('active');
+            $('.sidebar-directory-tree div.file').removeClass('active');
+            $(this).addClass('active');
+        });
+        $('.sidebar-directory-tree div.file').click(function () {
+            $('.sidebar-directory-tree div.folder').removeClass('active');
+            $('.sidebar-directory-tree div.file').removeClass('active');
+            var file = $(this);
+            file.addClass('active');
+
+            $('#tabWorking').click();
+            $('.sidebar-working-item').removeClass('active');
+            // 判断文件是否已经打开
+            if (editorDic[file.attr('data-path')]) {
+                $('.body.coding pre').hide();
+                $('pre#' + editorDic[file.attr('data-path')].id).show();
+                var items = $('.sidebar-working-item');
+                for (var i = 0; i < items.length; i++) {
+                    console.error($(items[i]).children('div').attr('data-path'), file.attr('data-path'), $(items[i]).children('div').attr('data-path') == file.attr('data-path'));
+                    if ($(items[i]).children('div').attr('data-path') == file.attr('data-path')) {
+                        $(items[i]).addClass('active');
+                        $(items[i]).prependTo('.sidebar-working');
+                    }
+                }
+            } else {
+                showMsg('Loading file content...');
+                // Add to working list
+                var working_item = $('<div class="sidebar-working-item active" ><i class="fa fa-file"></i> <div data-display="' + file.text().trim() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
+                working_item.click(function () {
+                    file.click();
+                });
+                working_item.prependTo('.sidebar-working');
+                node.invoke('ReadFile', req.query.project, file.attr('data-path'))
+                    .done(function (data) {
+                        if (data.isSucceeded) {
+                            var id = jFlick.GenerateRandomString();
+                            $('.body.coding').append('<pre id="' + id + '">' + data.msg + '</pre>');
+                            // Create Ace Editor
+                            var editor = ace.edit(id);
+                            editor.setOptions({
+                                enableBasicAutocompletion: false,
+                                enableLiveAutocompletion: true
+                            });
+                            editor.pomelo = {};
+                            editor.pomelo.path = file.attr('data-path');
+                            editor.pomelo.project = req.query.project;
+                            editor.setTheme("ace/theme/twilight");
+                            editor.session.setMode("ace/mode/csharp");
+                            // Editor events
+                            editor.getSession().on('change', function () {
+                                $('.sidebar-working-item.active div').html('*' + file.text());
+                            });
+                            editorDic[file.attr('data-path')] = { editor: editor, id: id };
+                            $('.body.coding pre').hide();
+                            $('#' + editorDic[file.attr('data-path')].id).show();
+                            hideMsg();
+                        } else {
+                            $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').remove();
+                            showMsg('An error occurred while reading file. <br />' + data.msg, 3000);
+                        }
+                    });
+            }
+        });
+        if (callback)
+            callback();
+        hideMsg();
+    });
+}
+
 router.get('/work/index', function (req, res, next) {
     showMsg("Loading project file structures...");
-    node.invoke('ListFolder', req.query.project, '')
-        .done(function (data) {
-            $('.work .sidebar .sidebar-directory-tree').html('');
-            $('.sidebar-working').html('');
-            var tree = ExpandDirectoryTree(data.msg);
-            $('.work .sidebar .sidebar-directory-tree').html(tree);
-            $('.sidebar-directory-tree div.folder').click(function () {
-                $('.sidebar-directory-tree div.folder').removeClass('active');
-                $('.sidebar-directory-tree div.file').removeClass('active');
-                $(this).addClass('active');
-            });
-            $('.sidebar-directory-tree div.file').click(function () {
-                $('.sidebar-directory-tree div.folder').removeClass('active');
-                $('.sidebar-directory-tree div.file').removeClass('active');
-                var file = $(this);
-                file.addClass('active');
-
-                $('#tabWorking').click();
-                $('.sidebar-working-item').removeClass('active');
-                // 判断文件是否已经打开
-                if (editorDic[file.attr('data-path')]) {
-                    $('.body.coding pre').hide();
-                    $('pre#' + editorDic[file.attr('data-path')].id).show();
-                    var items = $('.sidebar-working-item');
-                    for (var i = 0; i < items.length; i++) {
-                        console.error($(items[i]).children('div').attr('data-path'),file.attr('data-path'), $(items[i]).children('div').attr('data-path') == file.attr('data-path'));
-                        if ($(items[i]).children('div').attr('data-path') == file.attr('data-path')) {
-                            $(items[i]).addClass('active');
-                            $(items[i]).prependTo('.sidebar-working');
-                        }
-                    }
-                } else {
-                    showMsg('Loading file content...');
-                    // Add to working list
-                    var working_item = $('<div class="sidebar-working-item active" ><i class="fa fa-file"></i> <div data-display="' + file.text().trim() + '" data-path="' + file.attr('data-path') + '">' + file.text() + '</div></div>');
-                    working_item.click(function () {
-                        file.click();
-                    });
-                    working_item.prependTo('.sidebar-working');
-                    node.invoke('ReadFile', req.query.project, file.attr('data-path'))
-                        .done(function (data) {
-                            if (data.isSucceeded) {
-                                var id = jFlick.GenerateRandomString();
-                                $('.body.coding').append('<pre id="' + id + '">' + data.msg + '</pre>');
-                                // Create Ace Editor
-                                var editor = ace.edit(id);
-                                editor.setOptions({
-                                    enableBasicAutocompletion: false,
-                                    enableLiveAutocompletion: true
-                                });
-                                editor.pomelo = { };
-                                editor.pomelo.path = file.attr('data-path');
-                                editor.pomelo.project = req.query.project;
-                                editor.setTheme("ace/theme/twilight");
-                                editor.session.setMode("ace/mode/csharp");
-                                // Editor events
-                                editor.getSession().on('change', function () {
-                                    $('.sidebar-working-item.active div').html('*' + file.text());
-                                });
-                                editorDic[file.attr('data-path')] = { editor: editor, id: id };
-                                $('.body.coding pre').hide();
-                                $('#' + editorDic[file.attr('data-path')].id).show();
-                                hideMsg();
-                            } else {
-                                $('.sidebar-working-item div[data-path="' + file.attr('data-path') + '"]').parent('.sidebar-working-item').remove();
-                                showMsg('An error occurred while reading file. <br />' + data.msg, 3000);
-                            }
-                        });
-                }
-            });
-            hideMsg();
-        });
-
+    RebuildDirectoryTree(req.query.project);
     // Navigator bar click events
     $('.work .header-center-item.coding').click(function () {
         $('.work .body').addClass('hidden');
@@ -320,5 +326,25 @@ router.get('/work/index', function (req, res, next) {
                     }
                 });
         }
+    });
+
+    // Create folder
+    $('.tool-new-folder').click(function () {
+        var foldername = prompt("Folder name", "");
+        var path = $('.sidebar-directory-tree .active').attr('data-path');
+        if ($('.sidebar-directory-tree .active').hasClass('file')) {
+            path = dom.attr('data-path');
+        }
+        console.error(req.query.project, path, foldername);
+        node.invoke('CreateFolder', req.query.project, path, foldername)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    RebuildDirectoryTree(req.query.project, function () {
+                        $('.sidebar-directory-tree [data-path="' + data.path + '"]').parent().click();
+                    });
+                } else {
+                    showMsg('An error occurred while renaming folder. <br />' + data.msg, 3000);
+                }
+            });
     });
 });
