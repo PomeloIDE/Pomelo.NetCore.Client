@@ -76,7 +76,7 @@ function RebuildDirectoryTree(project, callback)
                     file.click();
                 });
                 working_item.prependTo('.sidebar-working');
-                node.invoke('ReadFile', req.query.project, file.attr('data-path'))
+                node.invoke('ReadFile', project, file.attr('data-path'))
                     .done(function (data) {
                         if (data.isSucceeded) {
                             var id = jFlick.GenerateRandomString();
@@ -89,7 +89,7 @@ function RebuildDirectoryTree(project, callback)
                             });
                             editor.pomelo = {};
                             editor.pomelo.path = file.attr('data-path');
-                            editor.pomelo.project = req.query.project;
+                            editor.pomelo.project = project;
                             editor.setTheme("ace/theme/twilight");
                             editor.session.setMode("ace/mode/csharp");
                             // Editor events
