@@ -1,4 +1,5 @@
 ﻿var editorDic = {};
+var current_diff = [];
 var langTools = ace.require('ace/ext/language_tools');
 var omnisharpCompleter = {
     getCompletions: function (editor, session, pos, prefix, callback) {
@@ -19,6 +20,13 @@ var omnisharpCompleter = {
     }
 }
 langTools.addCompleter(omnisharpCompleter);
+
+function showUncommittedDiff(i)
+{
+    $('.changes tbody').html(current_diff[i]);
+    $('.uncommitted-diff-item div').removeClass('active');
+    $($('.uncommitted-diff-item')[i]).children('div').addClass('active');
+}
 
 function ExpandDirectoryTree(obj)
 {
@@ -139,7 +147,31 @@ router.get('/work/index', function (req, res, next) {
         node.invoke('GetUncommitDiff', req.query.project)
             .done(function (data) {
                 if (data.isSucceeded) {
-                    console.error(data.msg);
+                    $('.sidebar-changes-list').html('');
+                    $('table.changes tbody').html('');
+                    current_diff = [];
+                    for (var i = 0; i < data.msg.length; i++) {
+                        var stat = '';
+                        var style = '';
+                        current_diff[i] = data.msg[i].Diff;
+                        if (data.msg[i].Type == 'Modification') {
+                            stat = 'M';
+                            style = 'modify';
+                        }
+                        else if (data.msg[i].Type == 'Deletion') {
+                            stat = 'D';
+                            style = 'delete';
+                        }
+                        else {
+                            stat = 'A';
+                            style = 'add';
+                        }
+                        $('.sidebar-changes-list').append('<a class="uncommitted-diff-item" href="javascript:showUncommittedDiff(' + i + ');"><div class="sidebar-changes-list-item"><span class="' + style + '">' + stat + '</span> ' + (data.msg[i].NewFilename == data.msg[i].OldFilename ? data.msg[i].OldFilename : data.msg[i].OldFilename + ' -> ' + data.msg[i].NewFilename) + '</div></a>');
+                    }
+                    if (data.msg.length > 0) {
+                        $($('.uncommitted-diff-item')[0]).click();
+                    }
+                    hideMsg();
                 } else {
                     $('#tabWorking').click();
                     showMsg('An error occurred while loading diff. <br />' + data.msg, 1000);

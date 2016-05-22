@@ -2,7 +2,7 @@
     $('.project .open-project-item .open').click(function () {
         showMsg("Loading...");
         var proj = $(this);
-        node.invoke('OpenProject', proj.attr('data-project'), proj.attr('data-git'), proj.attr('data-usr'), proj.attr('data-email'), proj.attr('data-pwd'))
+        node.invoke('OpenProject', proj.attr('data-project'), proj.attr('data-git'), proj.attr('data-usr'), proj.attr('data-pwd'), proj.attr('data-email'))
             .done(function (data) {
                 if (data.isSucceeded) {
                     showMsg("Starting OmniSharp Host...");
