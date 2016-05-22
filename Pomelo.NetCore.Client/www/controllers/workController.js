@@ -133,6 +133,18 @@ router.get('/work/index', function (req, res, next) {
         $('.work .header-center-item.git').addClass('active');
         $('.work .sidebar.git').removeClass('hidden');
         $('.work .body.git').removeClass('hidden');
+
+        // Refresh local diff
+        showMsg('Loading diff...');
+        node.invoke('GetUncommitDiff', req.query.project)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    console.error(data.msg);
+                } else {
+                    $('#tabWorking').click();
+                    showMsg('An error occurred while loading diff. <br />' + data.msg, 1000);
+                }
+            });
     });
 
     $('.work .header-center-item.browser').click(function () {
