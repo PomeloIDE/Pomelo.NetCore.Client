@@ -142,7 +142,7 @@ router.get('/work/index', function (req, res, next) {
                     console.error(data.msg);
                 } else {
                     $('#tabWorking').click();
-                    showMsg('An error occurred while loading diff. <br /> ' + data.msg, 1000);
+                    showMsg('An error occurred while loading diff. <br />' + data.msg, 1000);
                 }
             });
     });
