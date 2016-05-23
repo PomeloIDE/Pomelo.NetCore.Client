@@ -263,7 +263,24 @@ router.get('/work/index', function (req, res, next) {
                     $('.sidebar-histories').html('');
                     $('.histories').html('');
                     for (var i = 0; i < data.logs.length; i++) {
-                        $('.sidebar-histories').append('<div class="sidebar-histories-item" data-hash="' + data.logs[i].Hash + '"><img src="http://gravatar.com/avatar/' + md5(data.logs[i].Email) + '?s=200&d=mm&r=g" class="avatar" /><div class="info"><div class="summary">' + data.logs[i].Summary + '</div><div class="hint">' + moment(data.logs[i].Datetime * 1000).fromNow() + ' by ' + data.logs[i].Author + '</div></div></div>');
+                        var history_item = $('<div class="sidebar-histories-item" data-hash="' + data.logs[i].Hash + '"><img src="http://gravatar.com/avatar/' + md5(data.logs[i].Email) + '?s=200&d=mm&r=g" class="avatar" /><div class="info"><div class="summary">' + data.logs[i].Summary + '</div><div class="hint">' + moment(data.logs[i].Datetime * 1000).fromNow() + ' by ' + data.logs[i].Author + '</div></div></div>');
+                        history_item.click(function () {
+                            showMsg('Loading commit diffs...');
+                            node.invoke('GetGitDiff', req.query.project, $(this).attr('data-hash'))
+                                .done(function (data) {
+                                    if (data.isSucceeded) {
+                                        $('.body.git .histories').html('');
+                                        for (var j = 0; j < data.msg.length; j++) {
+                                            $('.body.git .histories').append('<div class="item">' + (data.msg[j].NewFilename == data.msg[j].OldFilename ? data.msg[j].OldFilename : data.msg[j].OldFilename + ' -> ' + data.msg[j].NewFilename) + '</div>');
+                                            $('.body.git .histories').append('<table><colgroup><col /><col /><col /></colgroup><tbody>' + data.msg[j].Diff + '</tbody></table>');
+                                        }
+                                        hideMsg();
+                                    } else {
+                                        showMsg('An error occurred while loading commit diffs. <br />' + data.msg, 3000);
+                                    }
+                                });
+                        });
+                        $('.sidebar-histories').append(history_item);
                     }
                     hideMsg();
                 } else {

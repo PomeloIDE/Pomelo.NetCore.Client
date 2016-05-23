@@ -834,3 +834,7 @@ ul li div.active {
 .right-buttons {
     float: right;
 }
+
+.body.git {
+    overflow-y: auto;
+}
