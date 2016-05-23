@@ -219,6 +219,8 @@ router.get('/work/index', function (req, res, next) {
         $('.work .sidebar-directory').addClass('hidden');
         $('.work .sidebar-working').show();
         $('.work .sidebar-working').removeClass('hidden');
+
+        showMsg('Loading git logs...')
     });
 
     $('#tabDirectory').click(function () {
@@ -254,6 +256,20 @@ router.get('/work/index', function (req, res, next) {
         $('.work .body.git .histories').removeClass('hidden');
         $('.work .body.git .changes').hide();
         $('.work .body.git .changes').addClass('hidden');
+
+        node.invoke('GetGitLogs', req.query.project)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    $('.sidebar-histories').html('');
+                    $('.histories').html('');
+                    for (var i = 0; i < data.logs.length; i++) {
+                        $('.sidebar-histories').append('<div class="sidebar-histories-item" data-hash="' + data.logs[i].Hash + '"><img src="http://gravatar.com/avatar/' + md5(data.logs[i].Email) + '?s=200&d=mm&r=g" class="avatar" /><div class="info"><div class="summary">' + data.logs[i].Summary + '</div><div class="hint">' + moment(data.logs[i].Datetime * 1000).fromNow() + ' by ' + data.logs[i].Author + '</div></div></div>');
+                    }
+                    hideMsg();
+                } else {
+                    showMsg('An error occurred while loading git logs.', 3000);
+                }
+            });
     });
 
     // Save button click
