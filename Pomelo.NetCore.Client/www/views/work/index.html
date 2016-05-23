@@ -59,34 +59,6 @@
             </div>
         </div>
         <div class="sidebar-histories">
-            <div class="sidebar-histories-item active">
-                <img src="http://7vzqh7.com1.z0.glb.clouddn.com/avatar.jpg" class="avatar" />
-                <div class="info">
-                    <div class="summary">Fix omnisharp server issue.</div>
-                    <div class="hint">28 days ago by Kagamine</div>
-                </div>
-            </div>
-            <div class="sidebar-histories-item">
-                <img src="http://7vzqh7.com1.z0.glb.clouddn.com/avatar.jpg" class="avatar" />
-                <div class="info">
-                    <div class="summary">Fix omnisharp server issue.</div>
-                    <div class="hint">28 days ago by Kagamine</div>
-                </div>
-            </div>
-            <div class="sidebar-histories-item">
-                <img src="http://7vzqh7.com1.z0.glb.clouddn.com/avatar.jpg" class="avatar" />
-                <div class="info">
-                    <div class="summary">Fix omnisharp server issue.</div>
-                    <div class="hint">28 days ago by Kagamine</div>
-                </div>
-            </div>
-            <div class="sidebar-histories-item">
-                <img src="http://7vzqh7.com1.z0.glb.clouddn.com/avatar.jpg" class="avatar" />
-                <div class="info">
-                    <div class="summary">Fix omnisharp server issue.</div>
-                    <div class="hint">28 days ago by Kagamine</div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="body git hidden">
@@ -101,51 +73,50 @@
         <div class="histories">
         </div>
     </div>
-</div>
-<!-- Git End -->
-<!-- Console Begin -->
-<div class="sidebar console hidden">
-    <div class="sidebar-console-session-before">
-        ACTIVE SESSIONS
+    <!-- Git End -->
+    <!-- Console Begin -->
+    <div class="sidebar console hidden">
+        <div class="sidebar-console-session-before">
+            ACTIVE SESSIONS
+        </div>
+        <div class="sidebar-console-session">
+            <div class="sidebar-console-session-item active">
+                <span>Pomelo.NetCore.Node</span>
+                <a class="button"><i class="fa fa-stop"></i></a>
+            </div>
+            <div class="sidebar-console-session-item">
+                <span>Pomelo.NetCore.Node</span>
+                <a class="button"><i class="fa fa-stop"></i></a>
+            </div>
+            <div class="sidebar-console-session-item">
+                <span>Pomelo.NetCore.Node</span>
+                <a class="button"><i class="fa fa-stop"></i></a>
+            </div>
+            <div class="sidebar-console-session-item">
+                <span>Pomelo.NetCore.Node</span>
+                <a class="button"><i class="fa fa-stop"></i></a>
+            </div>
+        </div>
     </div>
-    <div class="sidebar-console-session">
-        <div class="sidebar-console-session-item active">
-            <span>Pomelo.NetCore.Node</span>
-            <a class="button"><i class="fa fa-stop"></i></a>
-        </div>
-        <div class="sidebar-console-session-item">
-            <span>Pomelo.NetCore.Node</span>
-            <a class="button"><i class="fa fa-stop"></i></a>
-        </div>
-        <div class="sidebar-console-session-item">
-            <span>Pomelo.NetCore.Node</span>
-            <a class="button"><i class="fa fa-stop"></i></a>
-        </div>
-        <div class="sidebar-console-session-item">
-            <span>Pomelo.NetCore.Node</span>
-            <a class="button"><i class="fa fa-stop"></i></a>
+    <div class="body console hidden">
+        <textarea id="txtConsole" class="textbox-console">
+            Hosting environment: Production
+            Now listening on: http://103.193.149.207:80
+            Application started. Press Ctrl+C to shut down.
+        </textarea>
+    </div>
+    <!-- Console End -->
+    <!-- Ssh Begin -->
+    <div class="body ssh hidden">
+        <textarea id="txtConsole" class="textbox-console">[root@localhost ~]# </textarea>
+    </div>
+    <!-- Ssh End -->
+    <!-- Browser Begin -->
+    <div class="body browser hidden">
+        <div class="browser-navigator">
+            <p><input type="text" class="textbox" id="txtBrowserUrl" value="http://www.baidu.com" /></p>
+            <p><a class="button" href="javascript:window.open($('#txtBrowserUrl').val(), '_blank', 'location=yes');">Go!</a></p>
         </div>
     </div>
-</div>
-<div class="body console hidden">
-    <textarea id="txtConsole" class="textbox-console">
-        Hosting environment: Production
-        Now listening on: http://103.193.149.207:80
-        Application started. Press Ctrl+C to shut down.
-    </textarea>
-</div>
-<!-- Console End -->
-<!-- Ssh Begin -->
-<div class="body ssh hidden">
-    <textarea id="txtConsole" class="textbox-console">[root@localhost ~]# </textarea>
-</div>
-<!-- Ssh End -->
-<!-- Browser Begin -->
-<div class="body browser hidden">
-    <div class="browser-navigator">
-        <p><input type="text" class="textbox" id="txtBrowserUrl" value="http://www.baidu.com" /></p>
-        <p><a class="button" href="javascript:window.open($('#txtBrowserUrl').val(), '_blank', 'location=yes');">Go!</a></p>
-    </div>
-</div>
-<!-- Browser End -->
+    <!-- Browser End -->
 </div>

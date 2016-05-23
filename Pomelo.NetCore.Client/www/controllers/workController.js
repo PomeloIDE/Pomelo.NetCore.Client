@@ -265,6 +265,8 @@ router.get('/work/index', function (req, res, next) {
                     for (var i = 0; i < data.logs.length; i++) {
                         var history_item = $('<div class="sidebar-histories-item" data-hash="' + data.logs[i].Hash + '"><img src="http://gravatar.com/avatar/' + md5(data.logs[i].Email) + '?s=200&d=mm&r=g" class="avatar" /><div class="info"><div class="summary">' + data.logs[i].Summary + '</div><div class="hint">' + moment(data.logs[i].Datetime * 1000).fromNow() + ' by ' + data.logs[i].Author + '</div></div></div>');
                         history_item.click(function () {
+                            $('.sidebar-histories-item').removeClass('active');
+                            $(this).addClass('active');
                             showMsg('Loading commit diffs...');
                             node.invoke('GetGitDiff', req.query.project, $(this).attr('data-hash'))
                                 .done(function (data) {
