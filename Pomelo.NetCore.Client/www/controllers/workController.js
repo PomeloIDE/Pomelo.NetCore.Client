@@ -136,6 +136,13 @@ node.on('OnOutputDataReceived', function (pid, seq, msg) {
         $('.textbox-console.bash').val($('.textbox-console.bash').val() + msg);
         $('.textbox-console.bash').scrollTop($('.textbox-console.bash')[0].scrollHeight);
     } else {
+        var regex = new RegExp('Now listening on: (http.*)');
+        var ret = msg.match(regex);
+        if (ret && ret.length > 0) {
+            var url = ret[1].replace('*', nodeip);
+            window.open(url, '_blank', 'location=yes');
+            $('#txtBrowserUrl').val(url);
+        }
         $('.process-output[data-pid="' + pid + '"]').val($('.process-output[data-pid="' + pid + '"]').val() + msg);
         $('.process-output[data-pid="' + pid + '"]').scrollTop($('.process-output[data-pid="' + pid + '"]')[0].scrollHeight);
     }
@@ -245,8 +252,6 @@ router.get('/work/index', function (req, res, next) {
         $('.work .sidebar-directory').addClass('hidden');
         $('.work .sidebar-working').show();
         $('.work .sidebar-working').removeClass('hidden');
-
-        showMsg('Loading git logs...')
     });
 
     $('#tabDirectory').click(function () {

@@ -1,4 +1,5 @@
-﻿nodeConn = $.hubConnection('http://localhost:50556');
+﻿var nodeip = 'localhost';
+nodeConn = $.hubConnection('http://' + nodeip + ':50556');
 var node = nodeConn.createHubProxy('PomeloHub');
 
 function showMsg(txt, time)
