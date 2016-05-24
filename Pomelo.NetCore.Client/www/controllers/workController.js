@@ -130,8 +130,8 @@ node.on('OnOutputDataReceived', function (pid, seq, msg) {
         $('.textbox-console.bash').val($('.textbox-console.bash').val() + msg);
         $('.textbox-console.bash').scrollTop($('.textbox-console.bash')[0].scrollHeight);
     } else {
-        $('.textbox-console[data-process="' + pid + '"]').val($('.textbox-console[data-process="' + pid + '"]').val() + msg);
-        $('.textbox-console[data-process="' + pid + '"]').scrollTop($('.textbox-console[data-process="' + pid + '"]')[0].scrollHeight);
+        $('.process-output[data-pid="' + pid + '"]').val($('.process-output[data-pid="' + pid + '"]').val() + msg);
+        $('.process-output[data-pid="' + pid + '"]').scrollTop($('.process-output[data-pid="' + pid + '"]')[0].scrollHeight);
     }
 });
 
@@ -510,8 +510,27 @@ router.get('/work/index', function (req, res, next) {
                     } else {
                         $('.project-selector table').html('');
                         for (var i = 0; i < data.projects.length; i++) {
-                            $('.project-selector table').append('<tr data-path="' + data.projects[i].Path + '"><td>' + data.projects[i].Title + '</td><td>dotnet run</td><td><input type="text" class="textbox" /></td><td><div class="button button-run-command"><i class="fa fa-play"></i></div></td></tr>');
+                            $('.project-selector table').append('<tr><td>' + data.projects[i].Title + '</td><td>dotnet run</td><td><input type="text" class="textbox" /></td><td><div class="button button-run-command" data-display="' + data.projects[i].Title + '" data-path="' + data.projects[i].Path + '"><i class="fa fa-play"></i></div></td></tr>');
                         }
+                        $('.button-run-command').click(function () {
+                            var display = $(this).attr('data-display');
+                            var path = $(this).attr('data-path');
+                            var args= $(this).parent('td').parent('tr').find('input').val();
+                            node.invoke('RunCommand', req.query.project, args, path)
+                                .done(function (data) {
+                                    $('.process-output').hide();
+                                    $('.body.console').append('<textarea class="textbox-console process-output" data-pid="' + data.pid + '"></textarea>');
+                                    $('.sidebar-console-session-item').removeClass('active');
+                                    var process_item = $('<div class="sidebar-console-session-item active"><span>' + display + '</span><a href="javascript:stopProcess(\'' + path + '\', ' + data.pid + ')" class="button"><i class="fa fa-stop"></i></a></div>');
+                                    process_item.click(function () {
+                                        $('.process-output').hide();
+                                        $('.process-output[data-pid="' + data.pid + '"]').show();
+                                    });
+                                    $('.sidebar-console-session').prepend(process_item);
+                                    $('.header-center-item.console').click();
+                                    process_item.click();
+                                });
+                        });
                         $('.project-selector').removeClass('project-selector-hidden');
                         hideMsg();
                     }
