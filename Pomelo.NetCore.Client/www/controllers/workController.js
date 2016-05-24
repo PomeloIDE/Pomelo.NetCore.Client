@@ -23,6 +23,12 @@ var omnisharpCompleter = {
 }
 langTools.addCompleter(omnisharpCompleter);
 
+function stopProcess(pid)
+{
+    node.invoke('StopProcess', pid);
+    $('[data-pid="' + pid + '"]').remove();
+}
+
 function showUncommittedDiff(i)
 {
     $('.changes tbody').html(current_diff[i]);
@@ -521,7 +527,7 @@ router.get('/work/index', function (req, res, next) {
                                     $('.process-output').hide();
                                     $('.body.console').append('<textarea class="textbox-console process-output" data-pid="' + data.pid + '"></textarea>');
                                     $('.sidebar-console-session-item').removeClass('active');
-                                    var process_item = $('<div class="sidebar-console-session-item active"><span>' + display + '</span><a href="javascript:stopProcess(\'' + path + '\', ' + data.pid + ')" class="button"><i class="fa fa-stop"></i></a></div>');
+                                    var process_item = $('<div class="sidebar-console-session-item active" data-pid="' + data.pid + '"><span>' + display + '</span><a href="javascript:stopProcess(' + data.pid + ')" class="button"><i class="fa fa-stop"></i></a></div>');
                                     process_item.click(function () {
                                         $('.process-output').hide();
                                         $('.process-output[data-pid="' + data.pid + '"]').show();
