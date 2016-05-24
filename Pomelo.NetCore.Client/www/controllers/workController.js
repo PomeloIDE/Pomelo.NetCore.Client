@@ -1,4 +1,6 @@
 ﻿var editorDic = {};
+var bash_id;
+var bash_seq = 0;
 var current_diff = [];
 var langTools = ace.require('ace/ext/language_tools');
 var omnisharpCompleter = {
@@ -45,6 +47,7 @@ function ExpandDirectoryTree(obj)
 
 function RebuildDirectoryTree(project, callback)
 {
+    showMsg("Loading project file structures...");
     node.invoke('ListFolder', project, '')
     .done(function (data) {
         $('.work .sidebar .sidebar-directory-tree').html('');
@@ -121,8 +124,25 @@ function RebuildDirectoryTree(project, callback)
     });
 }
 
+node.on('OnOutputDataReceived', function (pid, seq, msg) {
+    // 如果是bash
+    if (pid == bash_id) {
+        $('.textbox-console.bash').val($('.textbox-console.bash').val() + msg);
+        $('.textbox-console.bash').scrollTop($('.textbox-console.bash')[0].scrollHeight);
+    } else {
+        $('.textbox-console[data-process="' + pid + '"]').val($('.textbox-console[data-process="' + pid + '"]').val() + msg);
+        $('.textbox-console[data-process="' + pid + '"]').scrollTop($('.textbox-console[data-process="' + pid + '"]')[0].scrollHeight);
+    }
+});
+
 router.get('/work/index', function (req, res, next) {
-    showMsg("Loading project file structures...");
+    showMsg('Starting bash or cmd process...');
+    node.invoke('RunBash')
+        .done(function (data) {
+            if (data.isSucceeded) {
+                bash_id = data.pid;
+            }
+        });
     RebuildDirectoryTree(req.query.project);
     // Navigator bar click events
     $('.work .header-center-item.coding').click(function () {
@@ -472,5 +492,10 @@ router.get('/work/index', function (req, res, next) {
                     showMsg('An error occurred while creating commit.', 3000);
                 }
             });
+    });
+
+    // Bash text area
+    $('.textbox-console.bash').keypress(function (e) {
+        node.invoke('ConsoleWrite', bash_id, ++bash_seq, e.which);
     });
 });
