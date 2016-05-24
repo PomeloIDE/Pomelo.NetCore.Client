@@ -228,8 +228,7 @@ function md5(string) {
 
 $(document).ready(function () {
     $(document).on('click', function (e) {
-        if ($(e.target).hasClass('project-selector') || $(e.target).parents('.project-selector').length > 0)
-            return;
-        $('.project-selector').addClass('hidden');
+        if (!($(e.target).hasClass('project-selector') || $(e.target).parents('.project-selector').length > 0 || $(e.target).hasClass('button-run') || $(e.target).parents('.button-run').length > 0))
+            $('.project-selector').addClass('project-selector-hidden');
     });
 });
