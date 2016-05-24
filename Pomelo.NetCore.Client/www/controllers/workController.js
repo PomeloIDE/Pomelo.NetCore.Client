@@ -430,7 +430,7 @@ router.get('/work/index', function (req, res, next) {
     // Create folder
     $('.tool-new-folder').click(function () {
         var foldername = prompt("Folder name", "");
-        var path = $('.sidebar-directory-tree .active').attr('data-path');
+        var path = $('.sidebar-directory-tree .active').length == 0 ? "" : $('.sidebar-directory-tree .active').attr('data-path');
         if ($('.sidebar-directory-tree .active').hasClass('file')) {
             path = $('.sidebar-directory-tree .active').attr('data-path').replace($('.sidebar-directory-tree .active').text().trim(), '');
         }
@@ -449,7 +449,7 @@ router.get('/work/index', function (req, res, next) {
     // Create file
     $('.tool-new-file').click(function () {
         var name = prompt("File name", "");
-        var path = $('.sidebar-directory-tree .active').attr('data-path');
+        var path = $('.sidebar-directory-tree .active').length > 0 ? $('.sidebar-directory-tree .active').attr('data-path') : "";
         if ($('.sidebar-directory-tree .active').hasClass('file')) {
             path = $('.sidebar-directory-tree .active').attr('data-path').replace($('.sidebar-directory-tree .active').text().trim(), '');
         }
