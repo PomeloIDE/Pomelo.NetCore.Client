@@ -485,11 +485,11 @@ router.get('/work/index', function (req, res, next) {
                                 $('.txt-git-commit-summary').val('');
                                 $('.commit-description').val('');
                             } else {
-                                showMsg('An error occurred while pushing commit to remote server.', 3000);
+                                showMsg('An error occurred while pushing commit to remote server. <br />' + data.msg, 3000);
                             }
                         });
                 } else {
-                    showMsg('An error occurred while creating commit.', 3000);
+                    showMsg('An error occurred while creating commit. <br />' + data.msg, 3000);
                 }
             });
     });
@@ -497,5 +497,27 @@ router.get('/work/index', function (req, res, next) {
     // Bash text area
     $('.textbox-console.bash').keypress(function (e) {
         node.invoke('ConsoleWrite', bash_id, ++bash_seq, e.which);
+    });
+
+    // Run button event 
+    $('.button.button-run').click(function () {
+        showMsg('Finding projects...');
+        node.invoke('GetProjectInfo', req.query.project)
+            .done(function (data) {
+                if (data.isSucceeded) {
+                    if (data.projects.length == 0) {
+                        showMsg('No project found.', 3000);
+                    } else {
+                        $('.project-selector table').html('');
+                        for (var i = 0; i < data.projects.length; i++) {
+                            $('.project-selector table').append('<tr data-path="' + data.projects[i].Path + '"><td>' + data.projects[i].Title + '</td><td>dotnet run</td><td><input type="text" class="textbox" /></td><td><div class="button button-run-command"><i class="fa fa-play"></i></div></td></tr>');
+                        }
+                        $('.project-selector').removeClass('project-selector-hidden');
+                        hideMsg();
+                    }
+                } else {
+                    showMsg('An error occurred while finding projects. <br />' + data.msg, 3000);
+                }
+            });
     });
 });

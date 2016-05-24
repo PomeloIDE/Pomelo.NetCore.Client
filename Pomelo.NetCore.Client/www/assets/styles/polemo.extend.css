@@ -205,7 +205,7 @@ a, a:link, a:visited, a:hover {
     background: #a6b62c;
 }
 
-.button-run {
+.button-run, .button-run-command {
     color: rgb(142,210,138);
 }
 
@@ -837,4 +837,34 @@ ul li div.active {
 
 .body.git {
     overflow-y: auto;
+}
+
+.project-selector-hidden {
+    margin-top: -100px;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.project-selector {
+    padding-top: 20px;
+    width: 480px;
+    background-color: rgb(40,40,40);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    position: absolute;
+    left: 50%;
+    margin-left: -240px;
+    padding: 15px;
+    z-index: 10000;
+    top: 0;
+    transition: all 0.3s linear;
+}
+
+.project-selector-table {
+    width: 100%;
+    table-layout: auto;
+    text-align: center;
+}
+
+.project-selector input {
+    width: 100px!important;
 }
