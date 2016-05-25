@@ -15,6 +15,7 @@
                                 showMsg("Starting OmniSharp Host...");
                                 node.invoke('StartOmnisharp', proj.attr('data-project'))
                                     .done(function () {
+                                        server.invoke('OpenProject', proj.attr('data-git'));
                                         jFlick.RedirectTo('~/work/index.html?project=' + proj.attr('data-project'));
                                     });
                             } else {
