@@ -1,6 +1,8 @@
-﻿var nodeip = 'localhost';
-nodeConn = $.hubConnection('http://' + nodeip + ':50556');
-var node = nodeConn.createHubProxy('PomeloHub');
+﻿var serverip = 'localhost'
+var nodeip;
+var serverConn = $.hubConnection('http://' + serverip + ':50557');
+var server = serverConn.createHubProxy('PomeloHub');
+var node;
 
 function showMsg(txt, time)
 {
@@ -30,7 +32,7 @@ function hideMsg()
         document.addEventListener('resume', onResume.bind(this), false);
         StatusBar.styleLightContent();
 
-        nodeConn.start()
+        serverConn.start()
             .done(function () {
                 jFlick.Startup();
             });
