@@ -50,28 +50,50 @@
             TEMPLATES
         </div>
         <div class="create-project-outer">
-            <div class="create-project-item active">
+            <div class="create-project-item" data-type="create-console-app">
                 <i class="fa fa-globe"></i>
                 <span>Console App</span>
             </div>
-            <div class="create-project-item">
+            <div class="create-project-item" data-type="create-web-empty">
                 <i class="fa fa-globe"></i>
                 <span>Web Empty</span>
             </div>
-            <div class="create-project-item">
+            <div class="create-project-item" data-type="create-web-mvc">
                 <i class="fa fa-globe"></i>
                 <span>Web MVC</span>
             </div>
         </div>
     </div>
     <div class="body create-project hidden">
-        <div class="description">
-            <h3>Console App</h3>
-            <img src="http://code.visualstudio.com/images/home-intellisense.svg" />
-            <p>Go beyond syntax highlighting and autocomplete with IntelliSense, which provides smart completions based on variable types, function definitions, and imported modules.</p>
+        <div class="create-project-description create-console-app hidden">
+            <div class="description">
+                <h3>Console App</h3>
+                <img src="http://code.visualstudio.com/images/home-intellisense.svg" />
+                <p>A console application is a computer program designed to be used via a text-only computer interface, such as a text terminal, the command line interface of some operating systems (Unix, DOS, etc.) or the text-based interface included with most Graphical User Interface (GUI) operating systems, such as the Win32 console in Microsoft Windows, the Terminal in Mac OS X, and xterm in Unix. A user typically interacts with a console application using only a keyboard and display screen, as opposed to GUI applications, which normally require the use of a mouse or other pointing device. Many console applications such as command line interpreters are command line tools, but numerous text-based user interface (TUI) programs also exist.</p>
+            </div>
+            <div class="creating">
+                <a href="javascript:createProject('ConsoleApp');" class="button create-project">Create</a>
+            </div>
         </div>
-        <div class="creating">
-            <a href="javascript:;" class="button">Create</a>
+        <div class="create-project-description create-web-empty hidden">
+            <div class="description">
+                <h3>Web Empty</h3>
+                <img src="http://code.visualstudio.com/images/home-intellisense.svg" />
+                <p>.NET Core is a set of runtime, library and compiler components. Microsoft uses these components in various configurations for device and cloud workloads. You can do the same for your app or service.</p>
+            </div>
+            <div class="creating">
+                <a href="javascript:createProject('WebApplicationEmpty');" class="button create-project">Create</a>
+            </div>
+        </div>
+        <div class="create-project-description create-web-mvc hidden">
+            <div class="description">
+                <h3>Web MVC</h3>
+                <img src="http://www.hanselman.com/blog/content/binary/Windows-Live-Writer/ASP.NET-5-is-dead---Introducing-ASP.NE.0_E068/image_60140ec0-ce46-4dbf-a14f-4210eab7f42c.png" />
+                <p>Creating an web application with ASP.Net MVC Core.</p>
+            </div>
+            <div class="creating">
+                <a href="javascript:createProject('WebApplicationMvc');" class="button create-project">Create</a>
+            </div>
         </div>
     </div>   
     <!-- Create Project End -->

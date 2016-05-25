@@ -46,4 +46,12 @@
         $('.project .sidebar.open-project').removeClass('hidden');
         $('.project .body.open-project').removeClass('hidden');
     });
+
+    $('.create-project-item').click(function () {
+        var dest = $(this).attr('data-type');
+        $('.create-project-description').addClass('hidden');
+        $('.create-project-description').hide();
+        $('.' + dest).removeClass('hidden');
+        $('.' + dest).show();
+    });
 });
